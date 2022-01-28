@@ -1178,6 +1178,30 @@ input[type='submit'][disabled],
 	line-height: 1.3;
 }
 
+.lottie-player {
+	position: relative;
+	display: inline-block;
+	line-height: 1;
+}
+
+.lottie-player:before {
+	content: '';
+	display: inline-block;
+	width: 100%;
+	padding-top: 100%;
+}
+
+.lottie-player lottie-player {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.parachain-block .lottie-player {
+	width: 670px;
+	max-width: 100%;
+}
+
 .section-try-it-now {
 	padding: 100px 0 80px;
 }
@@ -1200,10 +1224,6 @@ input[type='submit'][disabled],
 	--button-background: #1b2039;
 	margin: 20px 0 0;
 	min-width: 144px;
-}
-
-.parachain-block-polkadot img {
-	margin-top: -10%;
 }
 
 .section-monitor-shape-grid {
