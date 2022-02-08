@@ -4,6 +4,30 @@
 	--color-secondary: #004bff;
 }
 
+.w-1x {
+	width: 100%;
+}
+
+.w-2x {
+	width: 200%;
+}
+
+.w-3x {
+	width: 300%;
+}
+
+.w-4x {
+	width: 400%;
+}
+
+.w-5x {
+	width: 500%;
+}
+
+.w-6x {
+	width: 600%;
+}
+
 .row {
 	--bs-gutter-x: 30px;
 }
@@ -108,6 +132,10 @@
 .image-group .main-image {
 	position: relative;
 	z-index: 99;
+}
+
+.image-group .section-shape {
+	z-index: -1;
 }
 
 .row-xs-center {
@@ -1070,6 +1098,8 @@ input[type='submit'][disabled],
 }
 
 .section-header {
+	position: relative;
+	z-index: 1;
 	text-align: center;
 }
 
@@ -1080,6 +1110,8 @@ input[type='submit'][disabled],
 }
 
 .section-header-beside {
+	position: relative;
+	z-index: 1;
 	max-width: 650px;
 }
 
@@ -1237,7 +1269,7 @@ input[type='submit'][disabled],
 
 .section-send-and-receive {
 	padding: 140px 0 100px;
-	background: url(images/send-and-receive-bg.png) no-repeat right center;
+	z-index: 2;
 }
 
 .section-send-and-receive .section-header-beside {
@@ -1263,6 +1295,10 @@ input[type='submit'][disabled],
 .grant-and-access-shape-01 {
 	left: 40%;
 	bottom: 10%;
+}
+
+.section-shape-nft-assets-bg {
+	transform: translate(-45%, -45%);
 }
 
 .grant-and-access-image-behind {
@@ -1565,20 +1601,17 @@ input[type='submit'][disabled],
 }
 
 .section-shape-non-custodial {
-	transform: translate(40px, 50%);
+	transform: translate(0, 50%);
+	right: 12%;
+	bottom: 0;
 }
 
 .section-shape-non-custodial .main-image {
-	max-width: 52vw;
+	max-width: 18vw;
 }
 
 .block-non-custodial {
 	margin: 0 0 170px;
-}
-
-.non-custodial-image-bg {
-	width: 350%;
-	pointer-events: none;
 }
 
 .non-custodial-image {
@@ -1586,12 +1619,7 @@ input[type='submit'][disabled],
 }
 
 .section-non-custodial {
-	padding: 0 0 272px;
-}
-
-.section-shape-non-custodial {
-	right: 0;
-	bottom: 0;
+	padding: 120px 0 272px;
 }
 
 .section-child-shape-non-custodial-01 {
@@ -1905,7 +1933,7 @@ input[type='submit'][disabled],
 		padding: 80px 0 0;
 	}
 
-	.section-send-and-receive .section-header-beside {
+	.section-send-and-receive .image-group {
 		margin: 0 0 35px;
 	}
 
