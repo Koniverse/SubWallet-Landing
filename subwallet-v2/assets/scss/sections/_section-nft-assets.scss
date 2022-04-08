@@ -1,0 +1,120 @@
+.section-nft-assets {
+	padding: 113px 0 0;
+
+	.section-shape-dot-blur {
+		width: 110%;
+		top: 50%;
+		right: 0;
+		transform: translate(20%, -50%);
+	}
+}
+
+.section-nft-assets-shape-01 {
+	bottom: -10%;
+	left: 2%;
+
+	.main-image {
+		img {
+			max-width: 11vw;
+		}
+	}
+
+	.section-shape-blur {
+		width: 290%;
+	}
+}
+
+.section-freely-monitoring {
+	padding: 52px 0 36px;
+
+	.section-shape-dot-blur {
+		width: 142%;
+		top: 50%;
+		right: 0;
+		transform: translate(20%, -50%);
+	}
+
+	.section-shape-coin-01 {
+		left: 12%;
+		top: 18%;
+
+		img {
+			filter: blur(1px);
+			width: 39px;
+			max-width: 5vw;
+		}
+	}
+
+	.section-shape-coin-02 {
+		left: 7%;
+		bottom: 18%;
+
+		img {
+			transform: rotate(-116deg);
+			width: 62px;
+			max-width: 8vw;
+		}
+	}
+
+	.section-shape-coin-03 {
+		bottom: 15%;
+		right: -5%;
+		z-index: 100;
+
+		img {
+			width: 62px;
+			max-width: 8vw;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.section-nft-assets {
+		padding: 70px 0 0;
+
+		.section-header {
+			margin: 30px 0 0;
+		}
+
+		.section-header-inner {
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.col-md-7 {
+			text-align: center;
+		}
+
+		.image-group {
+			max-width: 60%;
+
+			.main-image {
+				img {
+					transform: translate(-12%, 0);
+				}
+			}
+		}
+	}
+
+	.section-freely-monitoring {
+		padding: 60px 0 0;
+
+		.section-header {
+			margin: 30px 0 0;
+		}
+
+		.section-header-inner {
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.col-md-7 {
+			text-align: center;
+		}
+
+		.image-group {
+			max-width: 60%;
+			margin: 0 auto;
+		}
+	}
+}

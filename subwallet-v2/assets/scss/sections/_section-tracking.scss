@@ -1,0 +1,45 @@
+.section-tracking {
+	padding: 114px 0 0;
+
+	.section-description {
+		max-width: 470px;
+	}
+}
+
+.tracking-image {
+	margin-left: -200px;
+}
+
+@include media-breakpoint-down(sm) {
+	.section-tracking {
+		padding: 80px 0 0;
+
+		.section-header {
+			text-align: center;
+		}
+
+		.section-header-inner {
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.section-description {
+			margin: 0 auto;
+		}
+
+		.tracking-image {
+			margin: 0;
+			text-align: center;
+
+			img {
+				max-width: 70%;
+				transform: translate(-10%, 0);
+			}
+		}
+
+		.section-header {
+			max-width: 470px;
+			margin: 0 auto;
+		}
+	}
+}

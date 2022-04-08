@@ -1,0 +1,32 @@
+.section-non-custodial {
+	padding: 150px 0 0;
+
+	.image-group {
+		.section-shape-blur {
+			width: 354%;
+
+			img {
+				transform: translateX(-3%);
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.section-non-custodial {
+		padding: 80px 0 0;
+
+		.section-header {
+			text-align: center;
+			margin: 25px 0 0;
+		}
+
+		.image-group {
+			.main-image {
+				img {
+					max-width: 30vw;
+				}
+			}
+		}
+	}
+}

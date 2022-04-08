@@ -1,0 +1,176 @@
+.block-security {
+	text-align: center;
+	margin: 0 0 126px;
+
+	.heading {
+		font-size: 32px;
+		font-weight: 600;
+		line-height: 1.375;
+		margin: 0;
+	}
+
+	.description-wrap {
+		margin: 10px 0 0;
+	}
+
+	.description {
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 1.667;
+	}
+
+	.image-group {
+		max-width: 50%;
+		margin: 0 auto 95px;
+
+		.section-shape-blur {
+			width: 208%;
+		}
+	}
+
+	&.block-security-non-custodial {
+		.image-group {
+			.section-shape-blur {
+				width: 206%;
+
+				img {
+					transform: translate(-10%, -2%);
+				}
+			}
+		}
+	}
+
+	&.block-security-audit-verification {
+		.image-group {
+			.section-shape-blur {
+				width: 206%;
+
+				img {
+					transform: translate(-4%, -1%);
+				}
+			}
+		}
+	}
+
+	&.block-security-open-source {
+		.image-group {
+			.section-shape-blur {
+				width: 320%;
+
+				img {
+					transform: translate(-8%, 4%);
+				}
+			}
+		}
+	}
+
+	&.block-security-privacy-respected {
+		.image-group {
+			.section-shape-blur {
+				img {
+					transform: translate(-4%, 4%);
+				}
+			}
+		}
+	}
+
+	&.block-security-open-source {
+		.image-group {
+			.section-shape-blur {
+				img {
+					transform: translate(-4%, 4%);
+				}
+			}
+		}
+	}
+}
+
+.page-security {
+	.section-security {
+		.section-header {
+			margin: 0 0 102px;
+		}
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.page-security {
+		.section-security {
+			.row {
+				--bs-gutter-x: 60px;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.block-security {
+		.heading {
+			font-size: 28px;
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.block-security {
+		margin: 0 0 90px;
+
+		.heading {
+			font-size: 24px;
+		}
+
+		.image-group {
+			margin: 0 auto 60px;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.block-security {
+		margin: 0 0 60px;
+
+		.heading {
+			font-size: 20px;
+		}
+
+		.description-wrap {
+			margin: 15px 0 0;
+		}
+
+		.description {
+			font-size: 16px;
+			line-height: 26px;
+		}
+
+		.image-group {
+			max-width: 30%;
+			margin: 0 auto 50px;
+		}
+
+		.inner {
+			max-width: 570px;
+			margin: 0 auto;
+		}
+	}
+
+	.page-security {
+		.section-security {
+			.section-header {
+				margin: 0 0 60px;
+			}
+
+			.section-header-inner {
+				max-width: 470px;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.block-security {
+		.description {
+			font-size: 14px;
+			line-height: 24px;
+		}
+	}
+}
