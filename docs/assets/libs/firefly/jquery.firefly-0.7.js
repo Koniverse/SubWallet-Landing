@@ -46,35 +46,37 @@
 		 */
 		$.firefly = function( settings ) {
 			$.firefly.settings = $.extend( {}, defaults, settings );
-			$.firefly.eleHeight = $( $.firefly.settings.on ).height(); // Set the height of the fireflies
-			$.firefly.eleWidth = $( $.firefly.settings.on ).width(); // Set the width of the fireflies
+
+			$.firefly.element = $.firefly.settings.on;
+
+			if ( typeof $.firefly.settings.on === 'string' ) {
+				$.firefly.element = $( $.firefly.settings.on )
+			}
+
+			$.firefly.eleHeight = $.firefly.element.outerHeight(); // Set the height of the fireflies
+			$.firefly.eleWidth = $.firefly.element.outerWidth(); // Set the width of the fireflies
 
 			$( window ).resize( function() {
 				if ( $.firefly.settings.on !== 'document.body' ) {
-					var off = $( $.firefly.settings.on ).offset(); // Get the offsets from the settings
+					var off = $.firefly.element.offset(); // Get the offsets from the settings
 					$.firefly.offsetTop = off.top; // Set the offset from the top
 					$.firefly.offsetLeft = off.left; // Set the offset from the left
-					$.firefly.eleHeight = $( $.firefly.settings.on ).height(); // Set the height of the fireflies
-					$.firefly.eleWidth = $( $.firefly.settings.on ).width(); // Set the width of the fireflies
 				} else {
 					$.firefly.offsetTop = 0; // Set the offset from the top
 					$.firefly.offsetLeft = 0; // Set the offset from the left
-					$.firefly.eleHeight = $( document.body ).height(); // Set the height of the fireflies
-					$.firefly.eleWidth = $( document.body ).width(); // Set the width of the fireflies
 				}
+
+				$.firefly.eleHeight = $.firefly.element.outerHeight(); // Set the height of the fireflies
+				$.firefly.eleWidth = $.firefly.element.outerWidth(); // Set the width of the fireflies
 			} );
 
 			if ( $.firefly.settings.on !== 'document.body' ) {
 				var off = $( $.firefly.settings.on ).offset(); // Get the offsets from the settings
 				$.firefly.offsetTop = off.top; // Set the offset from the top
 				$.firefly.offsetLeft = off.left; // Set the offset from the left
-				$.firefly.eleHeight = $( $.firefly.settings.on ).height(); // Set the height of the fireflies
-				$.firefly.eleWidth = $( $.firefly.settings.on ).width(); // Set the width of the fireflies
 			} else {
 				$.firefly.offsetTop = 0; // Set the offset from the top
 				$.firefly.offsetLeft = 0; // Set the offset from the left
-				$.firefly.eleHeight = $( document.body ).height(); // Set the height of the fireflies
-				$.firefly.eleWidth = $( document.body ).width(); // Set the width of the fireflies
 			}
 
 			for ( i = 0; i < $.firefly.settings.total; i ++ ) { // Run the next few lines of code for every firefly
@@ -84,7 +86,7 @@
 				$.firefly.fly( sp ); // Call the recursive fly function
 			}
 
-			$.firefly.sparks = $( $.firefly.settings.on ).children( '.' + $.firefly.settings.namespace ); // Create a list of all of the fireflies
+			$.firefly.sparks = $.firefly.element.children( '.' + $.firefly.settings.namespace ); // Create a list of all of the fireflies
 
 			return this;
 		};
@@ -132,6 +134,13 @@
 				$( $.firefly.settings.on ).append( spark );
 			}
 
+
+			var opacity = (
+				              Math.floor( Math.random() * (
+					              9 - 4 + 1
+				              ) ) + 4
+			              ) / 10;
+
 			return spark.css( {
 				'position': 'absolute', // Make the box moveable without constraints
 				'width': pixelSize, // Set the width of the box
@@ -139,6 +148,7 @@
 				'background-color': $.firefly.settings.color, // Set the color of the box
 				'z-index': $.firefly.settings.zIndex, // Potition it beneath the content
 				'border-radius': $.firefly.settings.borderRadius, // Make the border of the box/img round
+				'opacity': opacity,
 				'top': $.firefly.random( (
 					$.firefly.eleHeight - 50
 				) ), // Offset it to towards the bottom
@@ -162,7 +172,7 @@
 				left: $.firefly.random( (
 					$.firefly.eleWidth - 50
 				) ), // Offset it to towards the right
-				opacity: $.firefly.opacity( $.firefly.settings.twinkle ) // Make the box more or less visable
+				//opacity: $.firefly.opacity( $.firefly.settings.twinkle ) // Make the box more or less visable
 			}, {
 				duration: (
 					(

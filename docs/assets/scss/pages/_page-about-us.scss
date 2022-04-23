@@ -1,0 +1,147 @@
+.page-about-us {
+	.main-content {
+		background: url(../images/section-bg-multi-chains-assets.jpg) no-repeat top center;
+		background-size: 100% auto;
+	}
+
+	.block-team-member {
+		&.block-team-large {
+			margin-bottom: 53px;
+		}
+	}
+
+	.section-our-team {
+		.section-header {
+			margin: 0 0 70px;
+		}
+
+		.section-header-inner {
+			max-width: 700px;
+		}
+	}
+
+	.section-our-mission {
+		padding: 92px 0 0;
+
+		.section-header-inner {
+			max-width: 520px;
+		}
+
+		.image-group {
+			transform: translateX(-72px);
+		}
+
+		.section-shape-diamond {
+			top: 0;
+			right: 0;
+
+			img {
+				max-width: 8vw;
+			}
+		}
+
+		.section-shape-kusama2 {
+			top: 27%;
+			left: 18%;
+			z-index: 2;
+
+			img {
+				max-width: 7vw;
+			}
+		}
+
+		.section-shape-dot2 {
+			top: 3%;
+			right: 2%;
+			z-index: 2;
+
+			img {
+				max-width: 7vw;
+			}
+		}
+	}
+}
+
+.section-multi-chains-assets {
+	.section-header-inner {
+		max-width: 700px;
+	}
+
+	.section-title {
+		max-width: 470px;
+		margin: 0 auto;
+	}
+
+	.section-shape-dot {
+		top: 0;
+		right: 5%;
+
+		img {
+			max-width: 7vw;
+		}
+	}
+
+	.section-shape-kusama {
+		top: 0;
+		left: 3%;
+
+		img {
+			max-width: 9vw;
+		}
+	}
+}
+
+@media screen and(min-width: 1400px) {
+	.section-multi-chains-assets {
+		.section-shape-kusama {
+			top: 3%;
+			left: 10%;
+		}
+
+		.section-shape-dot {
+			top: 0;
+			right: 20%;
+			transform: translateY(-100%);
+		}
+	}
+
+	.page-about-us .section-our-mission .section-shape-diamond {
+		right: 6%;
+		top: 5%;
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.page-about-us {
+		.block-team-member {
+			&.block-team-large {
+				margin-bottom: 40px;
+			}
+		}
+
+		.section-our-mission {
+			padding: 30px 0 80px;
+
+			.image-group {
+				transform: none;
+				max-width: 70%;
+				margin: 0 auto -30px;
+			}
+
+			.section-header-inner {
+				text-align: center;
+				margin: 0 auto;
+			}
+		}
+
+		.section-our-team {
+			.section-header {
+				margin: 0 0 35px;
+			}
+
+			.section-header-inner {
+				max-width: 520px;
+			}
+		}
+	}
+}

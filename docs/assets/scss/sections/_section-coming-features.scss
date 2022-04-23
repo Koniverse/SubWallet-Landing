@@ -1,0 +1,111 @@
+.section-coming-features {
+	position: relative;
+	z-index: 100;
+	padding: 260px 0 200px;
+	background: url(../images/section-coming-bg.png) no-repeat bottom 36px center;
+	background-size: 100% auto;
+
+	.section-header {
+		margin: 0;
+	}
+
+	.section-description {
+		max-width: 640px;
+		margin: 0 auto;
+	}
+
+	.button-group {
+		--gutter-y: 16px;
+	}
+
+	.button {
+		padding: 0 30px;
+	}
+
+	.section-btn-callout {
+		margin-top: 58px;
+	}
+}
+
+.section-shape-coming-features-01 {
+	left: 6%;
+	top: 30%;
+
+	img {
+		max-width: 10vw;
+	}
+}
+
+.section-shape-coming-features-02 {
+	right: 6%;
+	top: 15%;
+
+	img {
+		max-width: 10vw;
+	}
+}
+
+.section-shape-coming-features-03 {
+	right: 0;
+	bottom: 6%;
+
+	img {
+		max-width: 10vw;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	.section-shape-coming-features-01 {
+		left: 15%;
+		top: 30%;
+	}
+
+	.section-shape-coming-features-02 {
+		right: 15%;
+	}
+
+	.section-shape-coming-features-03 {
+		right: 20px;
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.section-coming-features {
+		padding: 150px 0 140px;
+
+		.section-btn-callout {
+			margin-top: 34px;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.section-coming-features {
+		padding: 100px 0 100px;
+
+		.section-description {
+			max-width: 530px;
+			margin: 0 auto;
+		}
+
+		.button {
+			padding: 0 20px;
+		}
+
+		.section-btn-callout {
+			margin-top: 19px;
+		}
+	}
+
+	.section-shape-coming-features-01 {
+		top: 5%;
+	}
+}
+
+@media screen and (max-width: 629px) {
+	.section-coming-features {
+		.button {
+			width: 100%;
+		}
+	}
+}

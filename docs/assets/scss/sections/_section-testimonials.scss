@@ -1,0 +1,221 @@
+.block-tweet {
+	@extend %NormalTransition;
+	--outline-size: 0;
+	background: $box-background;
+	padding: 30px;
+
+	&:hover {
+		background: $box-hover-background;
+	}
+
+	.block-tweet-content {
+		position: relative;
+		z-index: 1;
+
+		&:after {
+			position: absolute;
+			right: 0;
+			top: 10px;
+			content: '';
+			width: 24px;
+			height: 24px;
+			background: url(../images/tweet/twitter-icon.png) no-repeat center;
+		}
+	}
+
+	.tweet-header {
+		display: flex;
+		margin: 0 20px 23px 0;
+	}
+
+	.tweet-author {
+		width: 48px;
+		flex-shrink: 0;
+		margin: 0 17px 0 0;
+
+		img {
+			border-radius: 50%;
+		}
+	}
+
+	.tweet-author-info {
+		flex-grow: 1;
+	}
+
+	.tweet-author-name {
+		font-size: 20px;
+		font-weight: 500;
+		color: $primary-color;
+		margin: 0;
+	}
+
+	.tweet-meta {
+		margin: 3px 0 0;
+		font-size: 15px;
+		color: #a8adc3;
+	}
+
+	.tweet-body {
+		font-size: 18px;
+		line-height: 30px;
+		font-weight: 400;
+		color: #fff;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box !important;
+		-webkit-line-clamp: 3; /* number of lines to show */
+		-webkit-box-orient: vertical;
+		min-height: 90px;
+	}
+
+	.tweet-date {
+		font-size: 15px;
+		color: #a8adc3;
+		font-weight: 500;
+		margin: 14px 0 0;
+	}
+}
+
+.section-testimonials {
+	padding: 100px 0 171px;
+
+	.image-group {
+		margin: 280px 0 0;
+		max-width: 25%;
+
+		.section-shape-blur {
+			width: 397%;
+
+			> img {
+				transform: translate(0, -12%);
+			}
+		}
+
+		.section-shape-01 {
+			bottom: 16%;
+			left: 0;
+
+			img {
+				transform: translate(-50%, 0);
+				max-width: 7vw;
+			}
+		}
+
+		.section-shape-02 {
+			right: 15%;
+			top: -15%;
+
+			img {
+				max-width: 7vw;
+			}
+		}
+
+		.section-shape-03 {
+			right: 0;
+			bottom: 0;
+
+			img {
+				max-width: 7vw;
+			}
+		}
+	}
+
+	.section-header-inner {
+		max-width: 360px;
+	}
+
+	.testimonial-slider {
+		.swiper-pagination-container {
+			margin-top: 25px;
+		}
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	.testimonial-slider {
+		--swiper-pagination-vertical-position: absolute;
+		--swiper-pagination-vertical-align: center;
+		--swiper-pagination-horizontal-align: flex-end;
+		--swiper-pagination-direction: column;
+		--swiper-pagination-margin-right: -70px;
+
+		.swiper-pagination-container {
+			margin: 0 !important;
+		}
+	}
+}
+
+@media screen and (max-width: 1599px) {
+	.section-testimonials {
+		.image-group {
+			margin: 180px 0 0;
+		}
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.section-testimonials {
+		.image-group-wrap {
+			text-align: center;
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.section-testimonials {
+		padding: 30px 0 80px;
+
+		.image-group {
+			margin: 240px 0 0;
+			max-width: 20%;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.section-testimonials {
+		.section-header-inner {
+			text-align: center;
+			margin: 0 auto;
+		}
+
+		.image-group {
+			margin: 115px 0;
+		}
+	}
+
+	.block-tweet {
+		.tweet-body {
+			font-size: 16px;
+			line-height: 26px;
+			min-height: 78px;
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.block-tweet {
+		.tweet-body {
+			font-size: 14px;
+			line-height: 24px;
+			min-height: 72px;
+		}
+	}
+}
+
+@include media-breakpoint-up(md) {
+	.testimonial-mobile-slider {
+		position: fixed;
+		top: -9999px;
+		left: -9999px;
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.testimonial-desktop-slider {
+		position: fixed;
+		top: -9999px;
+		left: -9999px;
+	}
+}

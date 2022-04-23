@@ -1,0 +1,166 @@
+.section-manage-portfolio {
+	padding: 140px 0 0;
+
+	.section-header {
+		margin: 0 0 50px;
+	}
+
+	.section-shape-blur {
+		left: 0;
+		right: 0;
+		bottom: 0;
+		img {
+			transform: translateX(20%);
+		}
+	}
+}
+
+.section-portfolio-shape-01 {
+	right: 5%;
+	top: 10%;
+
+	img {
+		max-width: 12vw;
+	}
+}
+
+.portfolio-slider {
+	max-width: 970px;
+	margin: 0 auto;
+}
+
+.block-portfolio-item {
+	--outline-size: 2px;
+	text-align: center;
+
+	.portfolio-image {
+		position: relative;
+		border-radius: 10px;
+		padding: var(--outline-size);
+
+		&:before {
+			@extend %NormalTransition;
+			content: '';
+			position: absolute;
+			top: calc(-1 * var(--outline-size));
+			right: calc(-1 * var(--outline-size));
+			bottom: calc(-1 * var(--outline-size));
+			left: calc(-1 * var(--outline-size));
+			border-radius: inherit;
+			background: linear-gradient(
+					-135deg, #4a75ad 0%, rgba(43, 54, 28, 0) 53.57%, #42703d 100%);
+			box-shadow: 0 4px 59px rgba(144, 255, 44, .25);
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		img {
+			position: relative;
+			z-index: 1;
+			border-radius: inherit;
+		}
+	}
+
+	&:hover {
+		.portfolio-image {
+			&:before {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+
+	.heading {
+		font-size: 32px;
+		font-weight: 600;
+		line-height: 1.375;
+		margin: 26px 0 0;
+	}
+}
+
+.portfolio-image {
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+@include media-breakpoint-down(lg) {
+	.block-portfolio-item {
+		.heading {
+			font-size: 28px;
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.section-manage-portfolio {
+		padding: 110px 0 0;
+	}
+
+	.block-portfolio-item {
+		.heading {
+			margin: 20px 0 0;
+			font-size: 24px;
+		}
+	}
+
+	.section-manage-portfolio {
+		.section-header {
+			margin: 0 0 40px;
+		}
+
+		.section-effect-snow {
+			display: none;
+		}
+	}
+}
+
+@include media-breakpoint-up(md) {
+	.portfolio-slider {
+		.swiper-pagination-container {
+			display: none;
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.portfolio-slider {
+		.swiper-nav-buttons-wrap {
+			display: none;
+		}
+
+		.swiper-pagination-container {
+			margin-top: 25px;
+		}
+	}
+
+	.section-manage-portfolio {
+		padding: 80px 0 0;
+
+		.section-header {
+			margin: 0 0 40px;
+		}
+
+		.section-header-inner {
+			max-width: 570px;
+		}
+	}
+
+	.section-portfolio-shape-01 {
+		top: 0;
+	}
+
+	.block-portfolio-item {
+		.heading {
+			margin: 16px 0 0;
+			font-size: 18px;
+		}
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.section-manage-portfolio {
+		.section-header-inner {
+			max-width: 440px;
+		}
+	}
+}

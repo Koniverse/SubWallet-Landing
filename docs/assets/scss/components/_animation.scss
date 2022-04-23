@@ -1,0 +1,55 @@
+@keyframes tm-loop-move-vertical {
+	0% {
+		transform: translate3d(0, -15px, 0);
+	}
+	100% {
+		transform: translate3d(0, 15px, 0);
+	}
+}
+
+.loop-move-vertical {
+	animation: 3s tm-loop-move-vertical linear infinite alternate;
+	animation-duration: var(--loop-speed, 3000ms);
+}
+
+
+/* Rotating */
+@-webkit-keyframes tm-rotating /* Safari and Chrome */
+{
+	from {
+		-webkit-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes tm-rotating {
+	from {
+		-ms-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-ms-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.rotating {
+	-webkit-animation: tm-rotating linear infinite;
+	-moz-animation: tm-rotating linear infinite;
+	-ms-animation: tm-rotating linear infinite;
+	-o-animation: tm-rotating linear infinite;
+	animation: tm-rotating linear infinite;
+	animation-duration: var(--loop-speed, 5000ms);
+}
