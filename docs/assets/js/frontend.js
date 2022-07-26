@@ -283,12 +283,14 @@
 			initSectionEffectSnow();
 		} );
 
-		AOS.init( {
-			duration: 1000,
-			delay: 200,
-			once: true,
-		} );
-
+		if ( typeof AOS !== 'undefined' ) {
+			AOS.init( {
+				duration: 1000,
+				delay: 200,
+				once: true,
+			} );
+		}
+		
 		function scrollTo() {
 			$( document.body ).on( 'click', '.scroll-to', function( evt ) {
 				evt.preventDefault();
@@ -320,13 +322,15 @@
 		}
 
 		function initSliders() {
-			$( '.tm-swiper' ).each( function() {
-				$( this ).SubwalletSwiper();
-			} );
+			if ( $.fn.SubwalletSwiper ) {
+				$( '.tm-swiper' ).each( function() {
+					$( this ).SubwalletSwiper();
+				} );
+			}
 		}
 
 		function initGrids() {
-			if ( $.fn.SubwalletGridLayout() ) {
+			if ( $.fn.SubwalletGridLayout ) {
 				$( '.block-grid' ).SubwalletGridLayout();
 			}
 		}
