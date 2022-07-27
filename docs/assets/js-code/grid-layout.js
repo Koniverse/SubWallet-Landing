@@ -41,7 +41,7 @@
 			};
 
 			// jQuery methods.
-			this.triggerMethod = ( method, options ) => {
+			this.triggerMethod = function( method, options ) {
 				if ( typeof this[ method ] === 'function' ) {
 					this[ method ]( options );
 				}
@@ -482,14 +482,15 @@
 				// Used find() for flex layout.
 				var items = $grid.find( '.grid-item' );
 
-				items.elementorWaypoint( function() {
+				items.waypoint( function() {
 					// Fix for different ver of waypoints plugin.
 					var _self = this.element ? this.element : this;
 					var $self = $( _self );
 					$self.addClass( 'animate' );
+
+					this.destroy(); // trigger once.
 				}, {
-					offset: '90%',
-					triggerOnce: true
+					offset: '90%'
 				} );
 			};
 

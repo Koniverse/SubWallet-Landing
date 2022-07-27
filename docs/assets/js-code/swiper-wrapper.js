@@ -424,7 +424,7 @@
 
 				// If lazy load + retina enable.
 				if ( $.fn.laziestloader ) {
-					$slider.elementorWaypoint( function() {
+					$slider.waypoint( function() {
 						var _self = this.element ? this.element : this;
 						var $self = $( _self );
 						var llImages = $self.find( '.ll-image' );
@@ -434,9 +434,10 @@
 								$( this ).unwrap( '.subwallet-lazy-image' );
 							} ).trigger( 'laziestloader' );
 						}
+
+						this.destroy(); // trigger once.
 					}, {
-						offset: '90%',
-						triggerOnce: true
+						offset: '90%'
 					} );
 				}
 
