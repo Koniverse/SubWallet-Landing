@@ -184,9 +184,6 @@
 						case 'dev-act-comparison':
 							chartOptions = getChartOptionsDevActComparison( jsonData );
 							break;
-						case 'vc-polkadot':
-							chartOptions = getChartOptionsVCPolkadot( jsonData );
-							break;
 						case 'polkadot-parachain':
 							chartOptions = getChartOptionsPolkadotParachain( jsonData );
 							break;
@@ -229,6 +226,9 @@
 						break;
 					case 'polkadot-account-overview':
 						chartOptions = getChartOptionsDotAccOverview();
+						break;
+					case 'vc-polkadot':
+						chartOptions = getChartOptionsVCPolkadot();
 						break;
 				}
 				chartInstance.hideLoading();
@@ -688,7 +688,7 @@
 				'#66E1B6'
 			];
 
-			var data = getPolkadotAccOverviewData();
+			var data = getChartDataPolkadotAccOverview();
 
 			return {
 				color: colors,
@@ -792,23 +792,13 @@
 			};
 		}
 
-		function getChartOptionsVCPolkadot( jsonData ) {
-			var totalItems = jsonData.length,
-			    data       = {
-				    category: [],
-				    investing: [],
-				    total: []
-			    },
-			    colors     = [
-				    '#66E1B6',
-				    '#004BFF'
-			    ];
+		function getChartOptionsVCPolkadot() {
+			var colors = [
+				'#66E1B6',
+				'#004BFF'
+			];
 
-			for ( var i = 0; i < totalItems; i ++ ) {
-				data.category.push( jsonData[ i ].time );
-				data.investing.push( jsonData[ i ].investing );
-				data.total.push( jsonData[ i ].total );
-			}
+			var data = getChartDataVcPolkadot();
 
 			return {
 				color: colors,
@@ -864,7 +854,6 @@
 				yAxis: [
 					{
 						type: 'category',
-						data: data.category,
 						inverse: true,
 						axisTick: {
 							show: false
@@ -890,19 +879,24 @@
 						}
 					}
 				],
+				dataset: {
+					source: data,
+					dimensions: [ 'category', 'investing', 'total', 'investing_percent', 'total_percent' ],
+				},
 				series: [
 					{
 						type: 'bar',
 						stack: 'total',
 						name: 'VCs Investing in Polkadot',
-						data: data.investing,
+						//data: data.investing,
 						label: {
 							fontFamily: fontFamily,
 							fontSize: 18,
 							fontWeight: 500,
 							align: 'right',
 							color: '#020722',
-							show: true
+							show: true,
+							formatter: '{@[3]}'
 						},
 						barMaxWidth: 48,
 						itemStyle: {
@@ -910,18 +904,25 @@
 						},
 						emphasis: {
 							focus: 'series'
-						}
+						},
+						datasetIndexnumber: 4
+						//dimensions: [ 'investing_percent' ],
+						/*encode: {
+							x: [ 'investing_percent', 'total_percent' ],
+							y: 'category'
+						}*/
 					}, {
 						type: 'bar',
 						stack: 'total',
 						name: 'Total VCs',
-						data: data.total,
+						//data: data.total,
 						label: {
 							fontFamily: fontFamily,
 							fontSize: 18,
 							fontWeight: 500,
 							align: 'right',
-							show: true
+							show: true,
+							formatter: '{@[4]}'
 						},
 						barMaxWidth: 48,
 						itemStyle: {
@@ -929,7 +930,9 @@
 						},
 						emphasis: {
 							focus: 'series'
-						}
+						},
+						datasetIndexnumber: 5
+						//dimensions: [ 'total_percent' ]
 					}
 				]
 			};
@@ -1866,7 +1869,7 @@
 			return chartOptions;
 		}
 
-		function getPolkadotAccOverviewData() {
+		function getChartDataPolkadotAccOverview() {
 			return [
 				[ 'date', 'incremental', 'cumulative' ],
 				[ "2021-11-04T00:00:00Z", 1510, 1510 ],
@@ -2140,6 +2143,36 @@
 				[ "2022-07-30T00:00:00Z", 2741, 922164 ],
 				[ "2022-07-31T00:00:00Z", 3546, 925710 ],
 				[ "2022-08-01T00:00:00Z", 718, 926428 ]
+			];
+		}
+
+		function getChartDataVcPolkadot() {
+			/*var data = [
+				[ 'category', 'investing', 'total', 'investing_percent', 'total_percent' ],
+				[ 'H1 2021', 19, 44, null, null ],
+				[ 'Q3 2021', 21, 53, null, null ],
+				[ 'Q4 2021', 24, 57, null, null ],
+				[ 'H1 2022', 29, 82, null, null ]
+			];
+
+			for ( var i = 1; i < data.length; i ++ ) {
+				var investing = data[ i ][ 1 ];
+				var total = data[ i ][ 2 ];
+				var sum = investing + total;
+
+				var investingPercent = precisionRoundMod( investing / sum * 100, 2 );
+				var totalPercent = precisionRoundMod( 100 - investingPercent, 2 );
+
+				data[ i ][ 3 ] = investingPercent;
+				data[ i ][ 4 ] = totalPercent;
+			}*/
+
+			return [
+				[ 'category', 'investing_percent', 'total_percent', 'investing', 'total' ],
+				[ 'H1 2021', 30.16, 69.84, 19, 44 ],
+				[ 'Q3 2021', 28.38, 71.62, 21, 53 ],
+				[ 'Q4 2021', 29.63, 70.37, 24, 57 ],
+				[ 'H1 2022', 26.13, 73.87, 29, 82 ]
 			];
 		}
 
