@@ -35,7 +35,7 @@
 				once: true,
 			} );
 		}
-		
+
 		function scrollTo() {
 			$( document.body ).on( 'click', '.scroll-to', function( evt ) {
 				evt.preventDefault();
@@ -43,7 +43,7 @@
 				const offsetTop = $( target ).offset().top;
 
 				window.scroll( {
-					top: offsetTop - 30,
+					top: offsetTop - 30 - 80,
 					left: 0,
 					behavior: 'smooth'
 				} )

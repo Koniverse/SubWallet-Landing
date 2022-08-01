@@ -104,6 +104,27 @@ input[type='submit'],
 	--mg-button-background: #1b2039;
 }
 
+.scroll-down-circle-btn {
+	--size: 84px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: var(--size);
+	height: var(--size);
+	border: 2px solid rgba(255, 255, 255, .2);
+	border-radius: 50%;
+
+	svg {
+		* {
+
+		}
+	}
+
+	&:hover {
+		border-color: #fff;
+	}
+}
+
 @include media-breakpoint-up(md) {
 	.button {
 		&.button-size-lg {
