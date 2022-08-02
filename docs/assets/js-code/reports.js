@@ -21,7 +21,7 @@
 				fontWeight: '500'
 			}
 		};
-		var defaultTooltipSettings = $.extend( {
+		var defaultTooltipSettings = $.extend( true, {}, defaultTooltipStyle, {
 			trigger: 'axis',
 			axisPointer: {
 				type: 'cross',
@@ -33,9 +33,10 @@
 					color: 'rgba(255,255,255,0.3)'
 				}
 			}
-		}, defaultTooltipStyle );
+		} );
 
 		var defaultLegendSettings = {
+			show: true,
 			icon: 'roundRect',
 			textStyle: {
 				fontFamily: fontFamily,
@@ -217,7 +218,7 @@
 					chartInstance.hideLoading();
 					chartInstance.setOption( chartOptions );
 				} );
-			} else {
+			} else { // Chart with inline source.
 				var chartOptions = {};
 
 				switch ( chartName ) {
@@ -398,7 +399,7 @@
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
+						//stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -425,7 +426,7 @@
 						smooth: true,
 						showSymbol: false,
 						yAxisIndex: 1,
-						stack: 'Total',
+						//stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -452,7 +453,7 @@
 						smooth: true,
 						showSymbol: false,
 						yAxisIndex: 2,
-						stack: 'Total',
+						//stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -806,7 +807,7 @@
 					fontFamily: fontFamily,
 					fontWeight: 500
 				},
-				tooltip: $.extend( {
+				tooltip: $.extend( true, {}, defaultTooltipStyle, {
 					valueFormatter: function( value ) {
 						return value + '%';
 					},
@@ -825,7 +826,7 @@
 							color: 'rgba(255,255,255,0.3)'
 						}
 					}
-				}, defaultTooltipStyle ),
+				} ),
 				legend: defaultLegendSettings,
 				grid: {
 					left: '3%',
@@ -1016,11 +1017,11 @@
 								color: [ '#212845' ]
 							}
 						},
-						axisPointer: $.extend( true, {
+						axisPointer: $.extend( true, {}, defaultAxisPointerSettings, {
 							label: {
 								formatter: "{value}M"
 							}
-						}, defaultAxisPointerSettings ),
+						} ),
 						axisLabel: {
 							formatter: "{value}M",
 							color: '#7B8098'
@@ -1124,12 +1125,15 @@
 				    '#66E1B6',
 				    '#9D3BEA'
 			    ],
+			    settings       = {
+				    formatter: 'currency'
+			    },
 			    areaBackground = [
 				    [ 'rgba(22,53,57,0.9)', 'rgba(22,53,57,0)' ],
 				    [ 'rgba(72,33,128,0.9)', 'rgba(72,33,128,0)' ]
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground );
+			return getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground );
 		}
 
 		function getChartOptionsKusamaParachain( jsonData ) {
@@ -1145,13 +1149,16 @@
 					    label: 'Genshiro'
 				    }
 			    ],
+			    settings = {
+				    formatter: 'currency'
+			    },
 			    colors   = [
 				    '#C30D00',
 				    '#F7A21B',
 				    '#004BFF'
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors );
+			return getChartLinesBaseOptions( jsonData, datasets, colors, settings );
 		}
 
 		function getChartOptionsDotsamaDex( jsonData ) {
@@ -1177,6 +1184,9 @@
 					    label: 'ArthSwap'
 				    }*/
 			    ],
+			    settings = {
+				    formatter: 'currency'
+			    },
 			    colors   = [
 				    '#66E1B6',
 				    //'#004BFF',
@@ -1186,7 +1196,7 @@
 				    '#89C900'
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors );
+			return getChartLinesBaseOptions( jsonData, datasets, colors, settings );
 		}
 
 		function getChartOptionsDotsamaLendingProtocol( jsonData ) {
@@ -1202,6 +1212,9 @@
 					    label: 'Moonwell Apollo'
 				    }
 			    ],
+			    settings       = {
+				    formatter: 'currency'
+			    },
 			    colors         = [
 				    '#004BFF',
 				    '#C30D00',
@@ -1213,7 +1226,7 @@
 				    [ 'rgba(107,76,41,1)', 'rgba(107,76,41,0.4)' ]
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground );
+			return getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground );
 		}
 
 		function getChartOptionsAUsdIssuance( jsonData ) {
@@ -1230,6 +1243,9 @@
 				    '#C30D00',
 				    '#004BFF'
 			    ],
+			    settings       = {
+				    formatter: 'currency'
+			    },
 			    areaBackground = [
 				    [ 'rgba(108,13,22,0.9)', 'rgba(108,13,22,0.3)' ],
 				    [ 'rgba(23,46,152,0.9)', 'rgba(23,46,152,0.3)' ]
@@ -1238,7 +1254,7 @@
 				    stack: 'total'
 			    };
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground, seriesOptions );
+			return getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground, seriesOptions );
 		}
 
 		function getChartOptionsRmrkCumulativeSales( jsonData ) {
@@ -1273,7 +1289,7 @@
 				    ]
 			    };
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground, seriesOptions, chartExtraOptions );
+			return getChartLinesBaseOptions( jsonData, datasets, colors, null, areaBackground, seriesOptions, chartExtraOptions );
 		}
 
 		function getChartOptionsRmrkDailySales( jsonData ) {
@@ -1391,7 +1407,33 @@
 				xAxis: [
 					{
 						type: 'time',
-						show: false
+						boundaryGap: false,
+						axisTick: {
+							show: false
+						},
+						axisLine: {
+							show: false,
+							lineStyle: {
+								color: '#212845'
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								type: [ 4, 4 ],
+								color: [ '#212845' ]
+							}
+						},
+						axisPointer: {
+							label: {
+								color: '#66E1B6',
+								backgroundColor: '#262C4A'
+							}
+						},
+						axisLabel: {
+							formatter: '{dd} {MMM} {yy}',
+							color: '#7B8098'
+						}
 					}
 				],
 				yAxis: [
@@ -1401,7 +1443,20 @@
 							show: false
 						},
 						splitLine: {
-							show: false
+							show: true,
+							lineStyle: {
+								type: [ 4, 4 ],
+								color: [ '#212845' ]
+							}
+						},
+						axisPointer: {
+							label: {
+								color: '#66E1B6',
+								backgroundColor: '#262C4A'
+							}
+						},
+						axisLabel: {
+							color: '#7B8098'
 						}
 					}
 				],
@@ -1670,12 +1725,12 @@
 
 			return {
 				color: colors,
-				tooltip: $.extend( true, {
+				tooltip: $.extend( true, {}, defaultTooltipStyle, {
 					trigger: 'item',
 					valueFormatter: function( value ) {
 						return numberWithCommas( value ) + ' DOT';
 					}
-				}, defaultTooltipStyle ),
+				} ),
 				legend: defaultLegendSettings,
 				grid: {
 					left: '3%',
@@ -1735,7 +1790,7 @@
 			};
 		}
 
-		function getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground, seriesOptions, chartExtraOptions ) {
+		function getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground, seriesOptions, chartExtraOptions ) {
 			var totalItems = jsonData.length,
 			    data       = [];
 
@@ -1785,7 +1840,7 @@
 				}
 
 				if ( typeof seriesOptions !== 'undefined' ) {
-					options = $.extend( options, seriesOptions );
+					options = $.extend( true, {}, options, seriesOptions );
 				}
 
 				chartSeries.push( options );
@@ -1797,9 +1852,17 @@
 					fontFamily: fontFamily,
 					fontWeight: 500
 				},
-				tooltip: $.extend( defaultTooltipSettings, {
-					valueFormatter: function( value ) {
-						return value ? '$' + numberWithCommas( value ) : '-';
+				tooltip: $.extend( true, {}, defaultTooltipStyle, {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'cross',
+						crossStyle: {
+							color: 'rgba(255,255,255,0.3)'
+						},
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: 'rgba(255,255,255,0.3)'
+						}
 					}
 				} ),
 				legend: defaultLegendSettings,
@@ -1828,7 +1891,12 @@
 								color: [ '#212845' ]
 							}
 						},
-						axisPointer: defaultAxisPointerSettings,
+						axisPointer: {
+							label: {
+								color: '#66E1B6',
+								backgroundColor: '#262C4A'
+							}
+						},
 						axisLabel: {
 							formatter: '{dd} {MMM} {yy}',
 							color: '#7B8098'
@@ -1848,13 +1916,13 @@
 								color: [ '#212845' ]
 							}
 						},
-						axisPointer: $.extend( true, {
+						axisPointer: {
 							label: {
-								formatter: "${value}"
+								color: '#66E1B6',
+								backgroundColor: '#262C4A'
 							}
-						}, defaultAxisPointerSettings ),
+						},
 						axisLabel: {
-							formatter: "${value}",
 							color: '#7B8098'
 						}
 					}
@@ -1862,8 +1930,19 @@
 				series: chartSeries
 			};
 
+			if ( typeof settings === 'object' && settings !== null ) {
+				if ( 'currency' === settings.formatter ) {
+					chartOptions.tooltip.valueFormatter = function( value ) {
+						return value ? '$' + numberWithCommas( value ) : '-';
+					};
+
+					chartOptions.yAxis[ 0 ].axisPointer.label.formatter = "${value}";
+					chartOptions.yAxis[ 0 ].axisLabel.formatter = "${value}";
+				}
+			}
+
 			if ( chartExtraOptions ) {
-				return $.extend( true, chartExtraOptions, chartOptions );
+				return $.extend( true, {}, chartOptions, chartExtraOptions );
 			}
 
 			return chartOptions;
