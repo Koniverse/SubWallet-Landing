@@ -136,7 +136,7 @@
 
 					? (
 						  Math.abs( Number( value ) ) / 1.0e+6
-					  ).toFixed( 2 ) + "M"
+					  ) + "M"
 					// Three Zeroes for Thousands
 					: Math.abs( Number( value ) ) >= 1.0e+3
 
@@ -209,9 +209,7 @@
 						case 'web-assembly-usage':
 							chartOptions = getChartOptionsWebAssemblyUsage( jsonData );
 							break;
-
-						// Not done.
-						case 'tmp-dot-treasury-activity':
+						case 'dot-treasury-activity':
 							chartOptions = getChartOptionsDotTreasuryActivity( jsonData );
 							break;
 					}
@@ -940,27 +938,35 @@
 		}
 
 		function getChartOptionsDotTreasuryActivity( jsonData ) {
-			var colors     = [
+			var datasets   = [
+				    {
+					    name: 'income',
+					    label: 'Income'
+				    }, {
+					    name: 'output',
+					    label: 'Output'
+				    }, {
+					    name: 'treasury_balance',
+					    label: 'Treasury'
+				    }
+			    ],
+			    colors     = [
 				    '#66E1B6',
 				    '#9D3BEA',
 				    '#004BFF'
 			    ],
 			    totalItems = jsonData.length,
-			    data       = {
-				    income: [],
-				    output: [],
-				    treasury: []
-			    };
+			    data       = [];
+
+			datasets.forEach( function( dataset ) {
+				data[ dataset.name ] = [];
+			} );
 
 			for ( var i = 0; i < totalItems; i ++ ) {
-				var income = jsonData[ i ].parallel ? validate_number( jsonData[ i ].parallel ) : '';
-				data.income.push( [ jsonData[ i ].date, income ] );
-
-				var output = jsonData[ i ].acala ? validate_number( jsonData[ i ].acala ) : '';
-				data.output.push( [ jsonData[ i ].date, output ] );
-
-				var treasury = jsonData[ i ].parallel ? validate_number( jsonData[ i ].parallel ) : '';
-				data.treasury.push( [ jsonData[ i ].date, treasury ] );
+				datasets.forEach( function( dataset ) {
+					var value = jsonData[ i ][ dataset.name ] ? validate_number( jsonData[ i ][ dataset.name ] ) : '';
+					data[ dataset.name ].push( [ jsonData[ i ].date, value ] );
+				} );
 			}
 
 			return {
@@ -981,7 +987,6 @@
 					{
 						type: 'time',
 						boundaryGap: false,
-						data: data.categories,
 						axisTick: {
 							show: false
 						},
@@ -999,7 +1004,7 @@
 						},
 						axisPointer: defaultAxisPointerSettings,
 						axisLabel: {
-							formatter: '{dd} {MMM} {yy}',
+							formatter: '{MMM} {yy}',
 							color: '#7B8098'
 						}
 					}
@@ -1019,11 +1024,15 @@
 						},
 						axisPointer: $.extend( true, {}, defaultAxisPointerSettings, {
 							label: {
-								formatter: "{value}M"
+								formatter: function( params ) {
+									return numberWithCommas( parseInt( params.value ) );
+								}
 							}
 						} ),
 						axisLabel: {
-							formatter: "{value}M",
+							formatter: function( value ) {
+								return moneyFormat( value );
+							},
 							color: '#7B8098'
 						}
 					}
@@ -1036,11 +1045,11 @@
 							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
 								{
 									offset: 0,
-									color: 'rgba(102,225,182,0.5)'
+									color: 'rgba(102,225,182,0.9)'
 								},
 								{
 									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
+									color: 'rgba(102,225,182,0.4)'
 								}
 							] )
 						},
@@ -1050,7 +1059,6 @@
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -1059,14 +1067,15 @@
 						name: 'Output',
 						data: data.output,
 						areaStyle: {
+							opacity: 1,
 							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
 								{
 									offset: 0,
-									color: 'rgba(73, 33, 130,0.5)'
+									color: 'rgba(77,35,135,1)'
 								},
 								{
 									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
+									color: 'rgba(77,35,135,1)'
 								}
 							] )
 						},
@@ -1076,23 +1085,22 @@
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
 					},
 					{
 						name: 'Treasury',
-						data: data.treasury,
+						data: data.treasury_balance,
 						areaStyle: {
 							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
 								{
 									offset: 0,
-									color: 'rgba(8, 62, 136,0.5)'
+									color: 'rgba(8, 62, 136,0.9)'
 								},
 								{
 									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
+									color: 'rgba(8, 62, 136,0.4)'
 								}
 							] )
 						},
@@ -1102,7 +1110,6 @@
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
