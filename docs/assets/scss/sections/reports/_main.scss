@@ -58,6 +58,10 @@
 	}
 }
 
+.block-table-body {
+	overflow-x: auto;
+}
+
 .block-report-chart {
 	margin: var(--chart-top-spacing, 88px) 0 var(--chart-bot-spacing, 96px);
 }
@@ -168,7 +172,6 @@
 .block-chart-header {
 	margin: 0 0 25px;
 	display: flex;
-	flex-wrap: wrap;
 	align-items: center;
 
 	.chart-logo {
@@ -326,6 +329,10 @@
 		max-width: 100%;
 	}
 
+	.text-wrap {
+		max-width: 100%;
+	}
+
 	.text {
 		font-size: 18px;
 		line-height: 30px;
@@ -442,22 +449,38 @@
 			transform: translate(-60%, -60%)
 		}
 
+		.main-image {
+			max-width: 60vw;
+		}
+
 		.shape-dot {
 			top: 45%;
 			left: 9%;
 			z-index: 2;
+
+			img {
+				max-width: 7vw;
+			}
 		}
 
 		.shape-ksm {
 			bottom: 9%;
 			left: 42%;
 			z-index: 2;
+
+			img {
+				max-width: 7.6vw;
+			}
 		}
 
 		.shape-diamond {
 			top: 0;
 			left: 33%;
 			z-index: 2;
+
+			img {
+				max-width: 6vw;
+			}
 		}
 	}
 
@@ -534,6 +557,10 @@
 		top: 0;
 		left: 0;
 		transform: translate(-20%, 0);
+
+		img {
+			max-width: 15.4vw;
+		}
 	}
 }
 
@@ -706,6 +733,12 @@
 		right: 0;
 		transform: translate(26%);
 
+		.main-image {
+			> img {
+				max-width: 40vw;
+			}
+		}
+
 		.shape-dot {
 			top: 50%;
 			left: 50%;
@@ -741,26 +774,44 @@
 	}
 
 	.image-group {
-		margin-top: -50px;
+		margin: -50px auto 0;
 
 		.section-shape {
 			z-index: 2;
 		}
 
+		.main-image {
+			> img {
+				max-width: 80vw;
+			}
+		}
+
 		.shape-ksm {
 			top: 21%;
 			left: 28%;
+
+			img {
+				max-width: 10vw;
+			}
 		}
 
 		.shape-dot {
 			bottom: 30%;
 			right: 30%;
+
+			img {
+				max-width: 11vw;
+			}
 		}
 
 		.shape-diamond {
 			bottom: 30%;
 			left: 30%;
 			opacity: .6;
+
+			img {
+				max-width: 7vw;
+			}
 		}
 
 		.brand-01 {
@@ -817,7 +868,7 @@
 }
 
 .section-report-friends {
-	padding: 207px 0 0;
+	padding: 153px 0 0;
 
 	.partners-grid {
 		--columns: 3;
@@ -876,11 +927,16 @@
 }
 
 .grid-contributors {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-gap: 46px 30px;
-	justify-items: center;
-	justify-content: space-around;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	.grid-item {
+		flex: 0 0 var(--item-width, 25%);
+		max-width: var(--item-width, 25%);
+		padding: 0 15px;
+		margin-bottom: var(--item-margin, 46px);
+	}
 }
 
 .block-contributor {
@@ -897,6 +953,7 @@
 		position: relative;
 		display: inline-flex;
 		width: var(--avatar-size);
+		max-width: 66%;
 		padding: var(--avatar-padding);
 		border-radius: 50%;
 		background: #020722;
@@ -1009,8 +1066,284 @@
 	}
 }
 
-@include media-breakpoint-up(sm) {
+@media screen and (max-width: 1400px) {
+	.report-title {
+		font-size: 48px;
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.report-title {
+		font-size: 40px;
+	}
+
+	.block-text .heading {
+		font-size: 34px;
+	}
+
+	.section-reports-hero {
+		.section-description {
+			font-size: 40px;
+		}
+	}
+}
+
+@include media-breakpoint-up(md) {
 	.section-report-friends .section-header {
 		margin: 0 !important;
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.grid-contributors {
+		--item-width: 33.333333%;
+	}
+
+	.block-contributor {
+		.avatar {
+			max-width: 50%;
+		}
+	}
+
+	.section-nft-overview {
+		.row-table-overview {
+			.block-text {
+				--text-width: 100% !important;
+				margin-bottom: 40px;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.page-reports .main-content {
+		padding: 120px 0 0;
+	}
+
+	.section-reports-hero {
+		.section-header {
+			margin-bottom: 120px;
+		}
+
+		.scroll-down-circle-btn {
+			--size: 60px;
+
+			svg {
+				width: 16px;
+			}
+		}
+	}
+
+	.section-report-comprehensive {
+		padding: 100px 0 90px;
+	}
+
+	.section-report-overview {
+		padding: 90px 0 0;
+	}
+
+	.report-title {
+		font-size: 34px;
+	}
+
+	.block-text {
+		.heading {
+			font-size: 26px;
+		}
+
+		.text {
+			font-size: 16px;
+			line-height: 26px;
+		}
+
+		.col-md-6 + .col-md-6 {
+			margin-top: 14px;
+		}
+	}
+
+	.block-report-chart {
+		--chart-top-spacing: 50px;
+		--chart-bot-spacing: 50px;
+		--content-h-spacing: 25px;
+		--block-round: 8px;
+		--border-size: -2px;
+		--chart-ratio: 80%;
+	}
+
+	.block-report-table {
+		--block-round: 8px;
+		--border-size: -2px;
+		--content-h-spacing: 25px;
+	}
+
+	.block-table-heading,
+	.block-chart-heading {
+		font-size: 18px;
+	}
+
+	.section-report-overview {
+		.block-chart-dev-act-comparison {
+			--chart-bot-spacing: 50px !important;
+		}
+	}
+
+	.section-reports-hero {
+		.section-title {
+			font-size: 40px;
+		}
+
+		.section-description {
+			font-size: 34px;
+		}
+	}
+
+	.section-treasury-output {
+		padding: 90px 0 180px;
+	}
+
+	.row-chart-treasury-output {
+		.block-text {
+			margin-top: 40px;
+		}
+	}
+
+	.section-defi-economy {
+		> .shape-union {
+			display: none;
+		}
+
+		.section-header {
+			margin: 0 0 40px;
+		}
+	}
+
+	.section-report-dex {
+		padding: 90px 0 0;
+	}
+
+	.section-report-lending-borrowing {
+		padding: 90px 0;
+	}
+
+	.section-report-stablecoin {
+		padding: 0 0 180px;
+	}
+
+	.section-nft-overview {
+		padding: 90px 0 0;
+
+		.row-table-overview {
+			margin-bottom: 60px;
+		}
+	}
+
+	.section-nft-rmrk-daily-sales {
+		padding: 90px 0 170px;
+	}
+
+	.section-web3-infrastructure {
+		padding: 90px 0 0;
+
+		> .shape-union {
+			display: none;
+		}
+
+		.block-report-chart {
+			--chart-top-spacing: 50px !important;
+			--chart-bot-spacing: 60px !important;
+		}
+	}
+
+	.section-report-closing-thought {
+		padding: 30px 0 180px;
+
+		.row-closing-image-wrap {
+			margin: 50px 0 60px;
+
+			.image-group {
+				max-width: 70%;
+				margin: 0 auto 40px;
+			}
+		}
+	}
+
+	.grid-contributors {
+		--item-width: 50%;
+		--item-margin: 35px;
+	}
+
+	.block-contributor {
+		.name {
+			font-size: 20px;
+		}
+	}
+
+	.section-report-contributors {
+		.section-header {
+			margin-bottom: 50px;
+		}
+	}
+
+	.section-report-friends {
+		padding: 70px 0 0;
+
+		.section-header-beside {
+			text-align: center;
+
+			.section-header-inner {
+				margin: 0 auto;
+			}
+		}
+
+		.partners-grid {
+			.partner-item {
+				min-height: 70px;
+			}
+		}
+	}
+
+	.section-report-top-footer {
+		padding: 110px 0 120px;
+	}
+}
+
+@media screen and (max-width: 575px) {
+	.block-report-chart {
+		--content-h-spacing: 15px;
+	}
+
+	.block-report-table {
+		--content-h-spacing: 15px;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.report-title {
+		font-size: 28px;
+	}
+
+	.page-reports {
+		.section-description-wrap {
+			margin: 20px 0 0;
+		}
+	}
+
+	.section-report-comprehensive {
+		padding: 90px 0 60px;
+	}
+
+	.section-report-overview {
+		padding: 60px 0 0;
+	}
+
+	.block-text {
+		.heading {
+			font-size: 22px;
+		}
+
+		.text {
+			font-size: 14px;
+			line-height: 24px;
+		}
 	}
 }

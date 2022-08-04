@@ -53,19 +53,14 @@
 	max-width: 100vw;
 }
 
-.section-rounded-corner {
-	--corner-size: 100px;
-	border-radius: var(--corner-size) var(--corner-size) 0 0;
-	background: linear-gradient(180deg, #020722 0%, rgba(2, 7, 34, 0) 70%);
-}
-
 .section-shape-corners {
-	bottom: 0;
+	--corner-size: 10vw;
+	--corner-rounded: 10vw;
+	bottom: -1px;
 	left: 0;
 	right: 0;
-	height: 100px;
-	--corner-size: 100px;
-	border-radius: var(--corner-size) var(--corner-size) 0 0;
+	height: var(--corner-size);
+	border-radius: var(--corner-rounded) var(--corner-rounded) 0 0;
 	z-index: 1;
 	background: $body-bg-color;
 }
@@ -276,6 +271,13 @@
 .section-content {
 	position: relative;
 	z-index: 11;
+}
+
+@media screen and (min-width: 1600px) {
+	.section-shape-corners {
+		--corner-size: 100px;
+		--corner-rounded: 100px;
+	}
 }
 
 @media screen and (max-width: 1440px) {

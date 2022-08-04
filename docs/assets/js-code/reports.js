@@ -379,18 +379,6 @@
 					{
 						name: 'KSM Price',
 						data: data.kusama,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
-								{
-									offset: 0,
-									color: 'rgba(102,225,182,0.5)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
-								}
-							] )
-						},
 						itemStyle: {
 							color: colors[ 0 ]
 						},
@@ -405,18 +393,6 @@
 					{
 						name: 'DOT Price',
 						data: data.polkadot,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
-								{
-									offset: 0,
-									color: 'rgba(236, 78, 68,0.5)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
-								}
-							] )
-						},
 						itemStyle: {
 							color: colors[ 1 ]
 						},
@@ -551,25 +527,12 @@
 					{
 						name: 'Near',
 						data: data.near,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
-								{
-									offset: 0,
-									color: 'rgba(102,225,182,0.5)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
-								}
-							] )
-						},
 						itemStyle: {
 							color: colors[ 0 ]
 						},
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -577,25 +540,12 @@
 					{
 						name: 'Ethereum',
 						data: data.eth,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
-								{
-									offset: 0,
-									color: 'rgba(213, 234, 114,0.5)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
-								}
-							] )
-						},
 						itemStyle: {
 							color: colors[ 1 ]
 						},
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -603,25 +553,12 @@
 					{
 						name: 'Solana',
 						data: data.sol,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
-								{
-									offset: 0,
-									color: 'rgba(236, 78, 68,0.5)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
-								}
-							] )
-						},
 						itemStyle: {
 							color: colors[ 2 ]
 						},
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -629,25 +566,12 @@
 					{
 						name: 'Polkadot',
 						data: data.dot,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
-								{
-									offset: 0,
-									color: 'rgba(236, 78, 68,0.5)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
-								}
-							] )
-						},
 						itemStyle: {
 							color: colors[ 3 ]
 						},
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -655,25 +579,12 @@
 					{
 						name: 'Matic',
 						data: data.matic,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
-								{
-									offset: 0,
-									color: 'rgba(236, 78, 68,0.5)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(7, 14, 48,0)'
-								}
-							] )
-						},
 						itemStyle: {
 							color: colors[ 4 ]
 						},
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
-						stack: 'Total',
 						emphasis: {
 							focus: 'series'
 						}
@@ -1186,21 +1097,21 @@
 					    name: 'zenlink',
 					    label: 'Zenlink'
 				    }
-				    /*, {
+				    , {
 					    name: 'arthswap',
 					    label: 'ArthSwap'
-				    }*/
+				    }
 			    ],
 			    settings = {
 				    formatter: 'currency'
 			    },
 			    colors   = [
 				    '#66E1B6',
-				    //'#004BFF',
 				    '#C30D00',
 				    '#F7A21B',
 				    '#9D3BEA',
-				    '#89C900'
+				    '#89C900',
+				    '#004BFF'
 			    ];
 
 			return getChartLinesBaseOptions( jsonData, datasets, colors, settings );
