@@ -63,6 +63,8 @@
 }
 
 .block-report-chart {
+	/* min height for chart */
+	--chart-height: 350px;
 	margin: var(--chart-top-spacing, 88px) 0 var(--chart-bot-spacing, 96px);
 }
 
@@ -207,6 +209,7 @@
 	line-height: 26px;
 	color: #7b8098;
 	max-width: 600px;
+	margin: 0 10px 0 0;
 
 	p {
 		margin: 0 0 4px;
@@ -219,8 +222,6 @@
 
 .block-table-branding,
 .block-chart-branding {
-	margin: 0 0 0 10px;
-
 	img {
 		max-width: 134px;
 	}
@@ -1168,6 +1169,10 @@
 		--block-round: 8px;
 		--border-size: -2px;
 		--chart-ratio: 80%;
+
+		&.chart-vc-polkadot {
+			--chart-height: 350px !important;
+		}
 	}
 
 	.block-report-table {

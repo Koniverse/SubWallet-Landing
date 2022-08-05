@@ -6,60 +6,70 @@
 
 		baseUrl = baseUrl.replace( 'report.html', 'assets/data/' );
 
-		var fontFamily = 'Space Grotesk';
-		var echarts = window.echarts;
+		var $allCharts                 = $( '.block-chart' ),
+		    resizeTimer,
+		    fontFamily                 = 'Space Grotesk',
+		    echarts                    = window.echarts,
+		    defaultTooltipStyle        = {
+			    padding: [ 15, 20 ],
+			    backgroundColor: '#21063C',
+			    borderWidth: 0,
+			    extraCssText: 'border-radius: 10px;box-shadow: 0 4px 50px rgba(161, 107, 216, 0.5);',
+			    textStyle: {
+				    fontFamily: fontFamily,
+				    color: '#7B8098',
+				    fontSize: 14,
+				    fontWeight: '500'
+			    }
+		    },
+		    defaultTooltipSettings     = $.extend( true, {}, defaultTooltipStyle, {
+			    trigger: 'axis',
+			    axisPointer: {
+				    type: 'cross',
+				    crossStyle: {
+					    color: 'rgba(255,255,255,0.3)'
+				    },
+				    lineStyle: {
+					    type: [ 4, 4 ],
+					    color: 'rgba(255,255,255,0.3)'
+				    }
+			    }
+		    } ),
+		    defaultLegendSettings      = {
+			    show: true,
+			    icon: 'roundRect',
+			    textStyle: {
+				    fontFamily: fontFamily,
+				    color: '#ffffff',
+				    fontSize: 13,
+				    fontWeight: '600',
+				    padding: [ 0, 0, 0, 3 ]
+			    },
+			    itemWidth: 14,
+			    itemHeight: 14,
+			    itemGap: 30,
+			    top: 'bottom',
 
-		var defaultTooltipStyle = {
-			padding: [ 15, 20 ],
-			backgroundColor: '#21063C',
-			borderWidth: 0,
-			extraCssText: 'border-radius: 10px;box-shadow: 0 4px 50px rgba(161, 107, 216, 0.5);',
-			textStyle: {
-				fontFamily: fontFamily,
-				color: '#7B8098',
-				fontSize: 14,
-				fontWeight: '500'
-			}
-		};
-		var defaultTooltipSettings = $.extend( true, {}, defaultTooltipStyle, {
-			trigger: 'axis',
-			axisPointer: {
-				type: 'cross',
-				crossStyle: {
-					color: 'rgba(255,255,255,0.3)'
-				},
-				lineStyle: {
-					type: [ 4, 4 ],
-					color: 'rgba(255,255,255,0.3)'
-				}
-			}
-		} );
-
-		var defaultLegendSettings = {
-			show: true,
-			icon: 'roundRect',
-			textStyle: {
-				fontFamily: fontFamily,
-				color: '#ffffff',
-				fontSize: 13,
-				fontWeight: '600',
-				padding: [ 0, 0, 0, 3 ]
-			},
-			itemWidth: 14,
-			itemHeight: 14,
-			itemGap: 30,
-			top: 'bottom'
-		};
-
-		var defaultAxisPointerSettings = {
-			label: {
-				color: '#66E1B6',
-				backgroundColor: '#262C4A'
-			}
-		};
+			    // Should be allow scroll for better ux.
+			    type: 'scroll',
+			    pageIconColor: '#ffffff',
+			    pageIconInactiveColor: 'rgba(255,255,255,0.2)',
+			    pageTextStyle: {
+				    fontFamily: fontFamily,
+				    color: '#ffffff',
+				    fontSize: 13,
+				    fontWeight: '600',
+			    }
+		    },
+		    defaultAxisPointerSettings = {
+			    label: {
+				    color: '#66E1B6',
+				    backgroundColor: '#262C4A'
+			    }
+		    };
 
 		$( document ).ready( function() {
-			$( '.block-chart' ).waypoint( function() {
+			$allCharts.waypoint( function() {
 				// Fix for different ver of waypoints plugin.
 				var _self = this.element ? this.element : this;
 				var $self = $( _self );
@@ -81,16 +91,59 @@
 		} );
 
 		$( window ).on( 'resize', function() {
-			$( '.block-chart' ).each( function() {
-				var chartInstance = echarts.getInstanceByDom( $( this ).get( 0 ) );
+			clearTimeout( resizeTimer );
+			resizeTimer = setTimeout( function() {
+				console.log( 'Resize all charts' );
+				// Run code here, resizing has "stopped".
+				$allCharts.each( function() {
+					var $chart        = $( this ),
+					    chartInstance = echarts.getInstanceByDom( $chart.get( 0 ) ),
+					    chartName     = $chart.data( 'chart-name' );
 
-				if ( typeof chartInstance !== 'undefined' ) {
-					chartInstance.resize( {
-						width: 'auto',
-						height: 'auto'
-					} );
-				}
-			} );
+					if ( typeof chartInstance !== 'undefined' ) {
+						chartInstance.resize( {
+							width: 'auto',
+							height: 'auto'
+						} );
+
+						var chartOptions = false;
+
+						switch ( chartName ) {
+							case 'price-dev-act':
+								chartOptions = getChartResponsiveOptionsPriceDevAct();
+								break;
+							case 'dev-act-comparison':
+								chartOptions = getChartResponsiveOptionsDevActComparison();
+								break;
+							case 'vc-polkadot':
+								chartOptions = getChartResponsiveOptionsVCPolkadot();
+								break;
+							case 'polkadot-account-overview':
+								chartOptions = getChartResponsiveOptionsDotAccOverview();
+								break;
+							case 'dot-treasury-activity':
+								chartOptions = getChartResponsiveOptionsDotTreasuryActivity();
+								break;
+							case 'polkadot-parachain':
+							case 'kusama-parachain':
+							case 'dotsama-dex':
+							case 'dotsama-lending-protocol':
+							case 'ausd-issuance':
+							case 'rmrk-cumulative-sales':
+								chartOptions = getChartLinesBaseResponsiveOptions( chartName );
+								break;
+							case 'rmrk-daily-sales':
+								chartOptions = getChartResponsiveOptionsRmrkDailySales( chartName );
+								break;
+
+						}
+
+						if ( chartOptions ) {
+							chartInstance.setOption( chartOptions )
+						}
+					}
+				} );
+			}, 500 );
 		} );
 
 		function initTableOfContents() {
@@ -127,7 +180,7 @@
 		}
 
 		function moneyFormat( value ) {
-			// Nine Zeroes for Billions
+			// Nine Zeroes for Billions.
 			return Math.abs( Number( value ) ) >= 1.0e+9
 
 				? Math.abs( Number( value ) ) / 1.0e+9 + "B"
@@ -137,7 +190,7 @@
 					? (
 						  Math.abs( Number( value ) ) / 1.0e+6
 					  ) + "M"
-					// Three Zeroes for Thousands
+					// Three Zeroes for Thousands.
 					: Math.abs( Number( value ) ) >= 1.0e+3
 
 						? Math.abs( Number( value ) ) / 1.0e+3 + "K"
@@ -180,37 +233,37 @@
 
 					switch ( chartName ) {
 						case 'price-dev-act':
-							chartOptions = getChartOptionsPriceDevAct( jsonData );
+							chartOptions = getChartOptionsPriceDevAct( chartName, jsonData );
 							break;
 						case 'dev-act-comparison':
-							chartOptions = getChartOptionsDevActComparison( jsonData );
+							chartOptions = getChartOptionsDevActComparison( chartName, jsonData );
 							break;
 						case 'polkadot-parachain':
-							chartOptions = getChartOptionsPolkadotParachain( jsonData );
+							chartOptions = getChartOptionsPolkadotParachain( chartName, jsonData );
 							break;
 						case 'kusama-parachain':
-							chartOptions = getChartOptionsKusamaParachain( jsonData );
+							chartOptions = getChartOptionsKusamaParachain( chartName, jsonData );
 							break;
 						case 'dotsama-dex':
-							chartOptions = getChartOptionsDotsamaDex( jsonData );
+							chartOptions = getChartOptionsDotsamaDex( chartName, jsonData );
 							break;
 						case 'dotsama-lending-protocol':
-							chartOptions = getChartOptionsDotsamaLendingProtocol( jsonData );
+							chartOptions = getChartOptionsDotsamaLendingProtocol( chartName, jsonData );
 							break;
 						case 'ausd-issuance':
-							chartOptions = getChartOptionsAUsdIssuance( jsonData );
+							chartOptions = getChartOptionsAUsdIssuance( chartName, jsonData );
 							break;
 						case 'rmrk-cumulative-sales':
-							chartOptions = getChartOptionsRmrkCumulativeSales( jsonData );
+							chartOptions = getChartOptionsRmrkCumulativeSales( chartName, jsonData );
 							break;
 						case 'rmrk-daily-sales':
-							chartOptions = getChartOptionsRmrkDailySales( jsonData );
+							chartOptions = getChartOptionsRmrkDailySales( chartName, jsonData );
 							break;
 						case 'web-assembly-usage':
-							chartOptions = getChartOptionsWebAssemblyUsage( jsonData );
+							chartOptions = getChartOptionsWebAssemblyUsage( chartName, jsonData );
 							break;
 						case 'dot-treasury-activity':
-							chartOptions = getChartOptionsDotTreasuryActivity( jsonData );
+							chartOptions = getChartOptionsDotTreasuryActivity( chartName, jsonData );
 							break;
 					}
 					chartInstance.hideLoading();
@@ -221,13 +274,13 @@
 
 				switch ( chartName ) {
 					case 'treasury-output':
-						chartOptions = getChartOptionsTreasuryOutput();
+						chartOptions = getChartOptionsTreasuryOutput( chartName );
 						break;
 					case 'polkadot-account-overview':
-						chartOptions = getChartOptionsDotAccOverview();
+						chartOptions = getChartOptionsDotAccOverview( chartName );
 						break;
 					case 'vc-polkadot':
-						chartOptions = getChartOptionsVCPolkadot();
+						chartOptions = getChartOptionsVCPolkadot( chartName );
 						break;
 				}
 				chartInstance.hideLoading();
@@ -235,7 +288,7 @@
 			}
 		}
 
-		function getChartOptionsPriceDevAct( jsonData ) {
+		function getChartOptionsPriceDevAct( chartName, jsonData ) {
 			var totalItems = jsonData.length,
 			    data       = {
 				    kusama: [],
@@ -254,7 +307,7 @@
 				data.dev.push( [ jsonData[ i ].date, jsonData[ i ].dev ] );
 			}
 
-			return {
+			var baseOptions = {
 				color: colors,
 				textStyle: {
 					fontFamily: fontFamily,
@@ -264,36 +317,34 @@
 				legend: defaultLegendSettings,
 				grid: {
 					left: '3%',
-					right: '10%',
+					right: 95,
 					top: '3%',
 					containLabel: true
 				},
-				xAxis: [
-					{
-						type: 'time',
-						boundaryGap: false,
-						splitLine: {
-							show: true,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							lineStyle: {
-								color: '#212845'
-							}
-						},
-						axisPointer: defaultAxisPointerSettings,
-						axisLabel: {
-							formatter: '{dd} {MMM} {yy}',
-							color: '#7B8098'
+				xAxis: {
+					type: 'time',
+					boundaryGap: false,
+					splitLine: {
+						show: true,
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#212845' ]
 						}
+					},
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#212845'
+						}
+					},
+					axisPointer: defaultAxisPointerSettings,
+					axisLabel: {
+						formatter: '{dd} {MMM} {yy}',
+						color: '#7B8098'
 					}
-				],
+				},
 				yAxis: [
 					{
 						type: 'value',
@@ -434,9 +485,45 @@
 					}
 				]
 			};
+			var responsiveOptions = getChartResponsiveOptionsPriceDevAct();
+
+			$.extend( true, baseOptions, responsiveOptions );
+
+			return baseOptions;
 		}
 
-		function getChartOptionsDevActComparison( jsonData ) {
+		function getChartResponsiveOptionsPriceDevAct() {
+			var newOptions = {};
+
+			if ( window.innerWidth > 767 ) {
+				newOptions = {
+					xAxis: {
+						splitNumber: 8
+					}
+				};
+			} else {
+				newOptions = {
+					tooltip: {
+						trigger: 'axis'
+					},
+					xAxis: {
+						splitNumber: 4
+					}
+				};
+
+				if ( window.innerWidth < 460 ) {
+					$.extend( newOptions, {
+						xAxis: {
+							splitNumber: 2
+						}
+					} )
+				}
+			}
+
+			return newOptions;
+		}
+
+		function getChartOptionsDevActComparison( chartName, jsonData ) {
 			var totalItems = jsonData.length,
 			    data       = {
 				    dot: [],
@@ -461,7 +548,7 @@
 				data.matic.push( [ jsonData[ i ].date, jsonData[ i ].matic ] );
 			}
 
-			return {
+			var baseOptions = {
 				color: colors,
 				textStyle: {
 					fontFamily: fontFamily,
@@ -475,54 +562,50 @@
 					top: '3%',
 					containLabel: true
 				},
-				xAxis: [
-					{
-						type: 'time',
-						boundaryGap: false,
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							lineStyle: {
-								color: '#212845'
-							}
-						},
-						splitLine: {
-							show: true,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: defaultAxisPointerSettings,
-						axisLabel: {
-							formatter: '{dd} {MMM} {yy}',
-							color: '#7B8098'
+				xAxis: {
+					type: 'time',
+					boundaryGap: false,
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#212845'
 						}
-					}
-				],
-				yAxis: [
-					{
-						type: 'value',
-						position: 'right',
-						axisLine: {
-							show: true,
-							lineStyle: {
-								color: colors[ 0 ]
-							}
-						},
-						splitLine: {
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: defaultAxisPointerSettings,
-						axisLabel: {
-							color: '#7B8098'
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#212845' ]
 						}
+					},
+					axisPointer: defaultAxisPointerSettings,
+					axisLabel: {
+						formatter: '{dd} {MMM} {yy}',
+						color: '#7B8098'
 					}
-				],
+				},
+				yAxis: {
+					type: 'value',
+					position: 'right',
+					axisLine: {
+						show: true,
+						lineStyle: {
+							color: colors[ 0 ]
+						}
+					},
+					splitLine: {
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#212845' ]
+						}
+					},
+					axisPointer: defaultAxisPointerSettings,
+					axisLabel: {
+						color: '#7B8098'
+					}
+				},
 				series: [
 					{
 						name: 'Near',
@@ -591,115 +674,182 @@
 					}
 				]
 			};
+			var responsiveOptions = getChartResponsiveOptionsDevActComparison();
+			return $.extend( true, baseOptions, responsiveOptions );
+		}
+
+		function getChartResponsiveOptionsDevActComparison() {
+			var newOptions = {};
+
+			if ( window.innerWidth > 767 ) {
+				newOptions = {
+					xAxis: {
+						splitNumber: 8
+					}
+				};
+			} else {
+				newOptions = {
+					xAxis: {
+						splitNumber: 4
+					}
+				};
+
+				if ( window.innerWidth < 460 ) {
+					$.extend( true, newOptions, {
+						xAxis: {
+							splitNumber: 2
+						}
+					} )
+				}
+			}
+
+			return newOptions;
 		}
 
 		function getChartOptionsDotAccOverview() {
-			var colors = [
-				'#66E1B6'
-			];
+			var colors            = [
+				    '#66E1B6'
+			    ],
+			    data              = getChartDataPolkadotAccOverview(),
+			    baseOptions       = {
+				    color: colors,
+				    textStyle: {
+					    fontFamily: fontFamily,
+					    fontWeight: 500
+				    },
+				    tooltip: defaultTooltipSettings,
+				    legend: {
+					    show: false
+				    },
+				    grid: {
+					    left: '3%',
+					    right: '3%',
+					    top: '3%',
+					    bottom: '3%',
+					    containLabel: true
+				    },
+				    dataset: {
+					    source: data
+				    },
+				    xAxis: {
+					    type: 'time',
+					    boundaryGap: [ '0%', '0%' ],
+					    splitLine: {
+						    show: true,
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: [ '#212845' ]
+						    }
+					    },
+					    axisTick: {
+						    show: false
+					    },
+					    axisLine: {
+						    show: true,
+						    lineStyle: {
+							    color: '#212845'
+						    }
+					    },
+					    axisPointer: defaultAxisPointerSettings,
+					    axisLabel: {
+						    formatter: '{dd} {MMM} {yy}',
+						    color: '#7B8098'
+					    }
+				    },
+				    yAxis: {
+					    type: 'value',
+					    splitLine: {
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: [ '#212845' ]
+						    }
+					    },
+					    axisLine: {
+						    show: false,
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: '#212845'
+						    }
+					    },
+					    axisPointer: defaultAxisPointerSettings,
+					    axisLabel: {
+						    color: '#7B8098'
+					    }
+				    },
+				    series: {
+					    name: 'Cumulative',
+					    areaStyle: {
+						    color: new echarts.graphic.LinearGradient( 0.5, 0.5, 1, 1, [
+							    {
+								    offset: 0,
+								    color: 'rgba(14,64,82,1)'
+							    },
+							    {
+								    offset: 1,
+								    color: 'rgba(7, 14, 48,0)'
+							    }
+						    ] )
+					    },
+					    itemStyle: {
+						    color: colors[ 0 ]
+					    },
+					    type: 'line',
+					    smooth: true,
+					    showSymbol: false,
+					    emphasis: {
+						    focus: 'series'
+					    },
+					    encode: {
+						    // Map "date" column to x-axis.
+						    x: 'date',
+						    // Map "cumulative" row to y-axis.
+						    y: 'cumulative'
+					    }
+				    }
+			    },
+			    responsiveOptions = getChartResponsiveOptionsDotAccOverview();
 
-			var data = getChartDataPolkadotAccOverview();
+			return $.extend( true, baseOptions, responsiveOptions );
+		}
 
-			return {
-				color: colors,
-				textStyle: {
-					fontFamily: fontFamily,
-					fontWeight: 500
-				},
-				tooltip: defaultTooltipSettings,
-				legend: {
-					show: false
-				},
-				grid: {
-					left: '3%',
-					right: '3%',
-					top: '3%',
-					bottom: '3%',
-					containLabel: true
-				},
-				dataset: {
-					source: data
-				},
-				xAxis: [
-					{
-						type: 'time',
-						boundaryGap: false,
-						splitLine: {
-							show: true,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							show: true,
-							lineStyle: {
-								color: '#212845'
-							}
-						},
-						axisPointer: defaultAxisPointerSettings,
+		function getChartResponsiveOptionsDotAccOverview() {
+			var newOptions = {};
+
+			if ( window.innerWidth > 767 ) {
+				newOptions = {
+					yAxis: {
 						axisLabel: {
-							formatter: '{dd} {MMM} {yy}',
-							color: '#7B8098'
+							formatter: '{value}'
 						}
+					},
+					xAxis: {
+						splitNumber: 8
 					}
-				],
-				yAxis: [
-					{
-						type: 'value',
-						splitLine: {
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisLine: {
-							show: false,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: '#212845'
-							}
-						},
-						axisPointer: defaultAxisPointerSettings,
+				};
+			} else {
+				newOptions = {
+					yAxis: {
 						axisLabel: {
-							color: '#7B8098'
-						}
-					}
-				],
-				series: {
-					name: 'Cumulative',
-					areaStyle: {
-						color: new echarts.graphic.LinearGradient( 0.5, 0.5, 1, 1, [
-							{
-								offset: 0,
-								color: 'rgba(14,64,82,1)'
-							},
-							{
-								offset: 1,
-								color: 'rgba(7, 14, 48,0)'
+							formatter: function( value ) {
+								return moneyFormat( value );
 							}
-						] )
+						}
 					},
-					itemStyle: {
-						color: colors[ 0 ]
-					},
-					type: 'line',
-					smooth: true,
-					showSymbol: false,
-					emphasis: {
-						focus: 'series'
-					},
-					encode: {
-						// Map "date" column to x-axis.
-						x: 'date',
-						// Map "cumulative" row to y-axis.
-						y: 'cumulative'
+					xAxis: {
+						splitNumber: 4
 					}
+				};
+
+				if ( window.innerWidth < 460 ) {
+					$.extend( newOptions, {
+						xAxis: {
+							splitNumber: 2
+						}
+					} )
 				}
-			};
+			}
+
+			return newOptions;
 		}
 
 		function getChartOptionsVCPolkadot() {
@@ -710,7 +860,7 @@
 
 			var data = getChartDataVcPolkadot();
 
-			return {
+			var baseOptions = {
 				color: colors,
 				textStyle: {
 					fontFamily: fontFamily,
@@ -743,55 +893,54 @@
 					top: '3%',
 					containLabel: true
 				},
-				xAxis: [
-					{
-						type: 'value',
-						axisLine: {
-							show: false
-						},
-						splitLine: {
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#2D3863' ]
-							}
-						},
-						axisLabel: {
-							formatter: "{value}%",
-							color: '#7B8098'
+				xAxis: {
+					type: 'value',
+					max: 100,
+					splitNumber: 4,
+					maxInterval: 25,
+					axisLine: {
+						show: false
+					},
+					splitLine: {
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#2D3863' ]
 						}
+					},
+					axisLabel: {
+						formatter: "{value}%",
+						color: '#7B8098'
 					}
-				],
-				yAxis: [
-					{
-						type: 'category',
-						inverse: true,
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							show: true,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: '#2D3863'
-							}
-						},
-						splitLine: {
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#2D3863' ]
-							}
-						},
-						axisLabel: {
-							fontFamily: fontFamily,
-							fontSize: 18,
-							fontWeight: 500,
-							color: '#A8ADC3'
+				},
+				yAxis: {
+					type: 'category',
+					inverse: true,
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						show: true,
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: '#2D3863'
 						}
+					},
+					splitLine: {
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#2D3863' ]
+						}
+					},
+					axisLabel: {
+						fontFamily: fontFamily,
+						fontSize: 18,
+						fontWeight: 500,
+						color: '#A8ADC3'
 					}
-				],
+				},
 				dataset: {
 					source: data,
-					dimensions: [ 'category', 'investing', 'total', 'investing_percent', 'total_percent' ],
+					dimensions: [ 'category', 'investing', 'total', 'investing_percent', 'total_percent' ]
 				},
 				series: [
 					{
@@ -846,9 +995,73 @@
 					}
 				]
 			};
+			var responsiveOptions = getChartResponsiveOptionsVCPolkadot();
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsDotTreasuryActivity( jsonData ) {
+		function getChartResponsiveOptionsVCPolkadot() {
+			var newOptions = {};
+
+			if ( window.innerWidth > 767 ) {
+				newOptions = {
+					yAxis: {
+						axisLabel: {
+							fontSize: 18
+						}
+					},
+					series: [
+						{
+							label: {
+								fontSize: 18
+							},
+							barMaxWidth: 48,
+							itemStyle: {
+								borderRadius: [ 8, 0, 0, 8 ]
+							}
+						}, {
+							label: {
+								fontSize: 18
+							},
+							barMaxWidth: 48,
+							itemStyle: {
+								borderRadius: [ 0, 8, 8, 0 ]
+							}
+						}
+					]
+				};
+			} else {
+				newOptions = {
+					yAxis: {
+						axisLabel: {
+							fontSize: 13
+						}
+					},
+					series: [
+						{
+							label: {
+								fontSize: 16
+							},
+							barMaxWidth: 32,
+							itemStyle: {
+								borderRadius: [ 5, 0, 0, 5 ]
+							}
+						}, {
+							label: {
+								fontSize: 16
+							},
+							barMaxWidth: 32,
+							itemStyle: {
+								borderRadius: [ 0, 5, 5, 0 ]
+							}
+						}
+					]
+				};
+			}
+
+			return newOptions;
+		}
+
+		function getChartOptionsDotTreasuryActivity( chartName, jsonData ) {
 			var datasets   = [
 				    {
 					    name: 'income',
@@ -880,156 +1093,183 @@
 				} );
 			}
 
-			return {
-				color: colors,
-				textStyle: {
-					fontFamily: fontFamily,
-					fontWeight: 500
-				},
-				tooltip: defaultTooltipSettings,
-				legend: defaultLegendSettings,
-				grid: {
-					left: '3%',
-					right: '3%',
-					top: '3%',
-					containLabel: true
-				},
-				xAxis: [
-					{
-						type: 'time',
-						boundaryGap: false,
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							lineStyle: {
-								color: '#212845'
-							}
-						},
-						splitLine: {
-							show: false,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: defaultAxisPointerSettings,
-						axisLabel: {
-							formatter: '{MMM} {yy}',
-							color: '#7B8098'
-						}
-					}
-				],
-				yAxis: [
-					{
-						type: 'value',
-						position: 'right',
-						axisLine: {
-							show: false
-						},
-						splitLine: {
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: $.extend( true, {}, defaultAxisPointerSettings, {
-							label: {
-								formatter: function( params ) {
-									return numberWithCommas( parseInt( params.value ) );
-								}
-							}
-						} ),
-						axisLabel: {
-							formatter: function( value ) {
-								return moneyFormat( value );
-							},
-							color: '#7B8098'
-						}
-					}
-				],
-				series: [
-					{
-						name: 'Income',
-						data: data.income,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
-								{
-									offset: 0,
-									color: 'rgba(102,225,182,0.9)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(102,225,182,0.4)'
-								}
-							] )
-						},
-						itemStyle: {
-							color: colors[ 0 ]
-						},
-						type: 'line',
-						smooth: true,
-						showSymbol: false,
-						emphasis: {
-							focus: 'series'
-						}
-					},
-					{
-						name: 'Output',
-						data: data.output,
-						areaStyle: {
-							opacity: 1,
-							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
-								{
-									offset: 0,
-									color: 'rgba(77,35,135,1)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(77,35,135,1)'
-								}
-							] )
-						},
-						itemStyle: {
-							color: colors[ 1 ]
-						},
-						type: 'line',
-						smooth: true,
-						showSymbol: false,
-						emphasis: {
-							focus: 'series'
-						}
-					},
-					{
-						name: 'Treasury',
-						data: data.treasury_balance,
-						areaStyle: {
-							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
-								{
-									offset: 0,
-									color: 'rgba(8, 62, 136,0.9)'
-								},
-								{
-									offset: 1,
-									color: 'rgba(8, 62, 136,0.4)'
-								}
-							] )
-						},
-						itemStyle: {
-							color: colors[ 2 ]
-						},
-						type: 'line',
-						smooth: true,
-						showSymbol: false,
-						emphasis: {
-							focus: 'series'
-						}
-					}
-				]
-			};
+			var baseOptions       = {
+				    color: colors,
+				    textStyle: {
+					    fontFamily: fontFamily,
+					    fontWeight: 500
+				    },
+				    tooltip: defaultTooltipSettings,
+				    legend: defaultLegendSettings,
+				    grid: {
+					    left: '3%',
+					    right: '3%',
+					    top: '3%',
+					    containLabel: true
+				    },
+				    xAxis: {
+					    type: 'time',
+					    boundaryGap: false,
+					    axisTick: {
+						    show: false
+					    },
+					    axisLine: {
+						    lineStyle: {
+							    color: '#212845'
+						    }
+					    },
+					    splitLine: {
+						    show: false,
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: [ '#212845' ]
+						    }
+					    },
+					    axisPointer: defaultAxisPointerSettings,
+					    axisLabel: {
+						    formatter: '{MMM} {yy}',
+						    color: '#7B8098'
+					    }
+				    },
+				    yAxis: {
+					    type: 'value',
+					    position: 'right',
+					    axisLine: {
+						    show: false
+					    },
+					    splitLine: {
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: [ '#212845' ]
+						    }
+					    },
+					    axisPointer: $.extend( true, {}, defaultAxisPointerSettings, {
+						    label: {
+							    formatter: function( params ) {
+								    return numberWithCommas( parseInt( params.value ) );
+							    }
+						    }
+					    } ),
+					    axisLabel: {
+						    formatter: function( value ) {
+							    return moneyFormat( value );
+						    },
+						    color: '#7B8098'
+					    }
+				    },
+				    series: [
+					    {
+						    name: 'Income',
+						    data: data.income,
+						    areaStyle: {
+							    color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
+								    {
+									    offset: 0,
+									    color: 'rgba(102,225,182,0.9)'
+								    },
+								    {
+									    offset: 1,
+									    color: 'rgba(102,225,182,0.4)'
+								    }
+							    ] )
+						    },
+						    itemStyle: {
+							    color: colors[ 0 ]
+						    },
+						    type: 'line',
+						    smooth: true,
+						    showSymbol: false,
+						    emphasis: {
+							    focus: 'series'
+						    }
+					    },
+					    {
+						    name: 'Output',
+						    data: data.output,
+						    areaStyle: {
+							    opacity: 1,
+							    color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
+								    {
+									    offset: 0,
+									    color: 'rgba(77,35,135,1)'
+								    },
+								    {
+									    offset: 1,
+									    color: 'rgba(77,35,135,1)'
+								    }
+							    ] )
+						    },
+						    itemStyle: {
+							    color: colors[ 1 ]
+						    },
+						    type: 'line',
+						    smooth: true,
+						    showSymbol: false,
+						    emphasis: {
+							    focus: 'series'
+						    }
+					    },
+					    {
+						    name: 'Treasury',
+						    data: data.treasury_balance,
+						    areaStyle: {
+							    color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
+								    {
+									    offset: 0,
+									    color: 'rgba(8, 62, 136,0.9)'
+								    },
+								    {
+									    offset: 1,
+									    color: 'rgba(8, 62, 136,0.4)'
+								    }
+							    ] )
+						    },
+						    itemStyle: {
+							    color: colors[ 2 ]
+						    },
+						    type: 'line',
+						    smooth: true,
+						    showSymbol: false,
+						    emphasis: {
+							    focus: 'series'
+						    }
+					    }
+				    ]
+			    },
+			    responsiveOptions = getChartResponsiveOptionsDotTreasuryActivity();
+
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsPolkadotParachain( jsonData ) {
+		function getChartResponsiveOptionsDotTreasuryActivity() {
+			var newOptions = {};
+
+			if ( window.innerWidth > 767 ) {
+				newOptions = {
+					xAxis: {
+						splitNumber: 8
+					}
+				};
+			} else {
+				newOptions = {
+					xAxis: {
+						splitNumber: 4
+					}
+				};
+
+				if ( window.innerWidth < 460 ) {
+					$.extend( true, newOptions, {
+						xAxis: {
+							splitNumber: 2
+						}
+					} );
+				}
+			}
+
+			return newOptions;
+		}
+
+		function getChartOptionsPolkadotParachain( chartName, jsonData ) {
 			var datasets       = [
 				    {
 					    name: 'parallel',
@@ -1043,18 +1283,17 @@
 				    '#66E1B6',
 				    '#9D3BEA'
 			    ],
-			    settings       = {
-				    formatter: 'currency'
-			    },
 			    areaBackground = [
 				    [ 'rgba(22,53,57,0.9)', 'rgba(22,53,57,0)' ],
 				    [ 'rgba(72,33,128,0.9)', 'rgba(72,33,128,0)' ]
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground );
+			var baseOptions = getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground );
+			var responsiveOptions = getChartLinesBaseResponsiveOptions( chartName );
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsKusamaParachain( jsonData ) {
+		function getChartOptionsKusamaParachain( chartName, jsonData ) {
 			var datasets = [
 				    {
 					    name: 'karura',
@@ -1067,19 +1306,18 @@
 					    label: 'Genshiro'
 				    }
 			    ],
-			    settings = {
-				    formatter: 'currency'
-			    },
 			    colors   = [
 				    '#C30D00',
 				    '#F7A21B',
 				    '#004BFF'
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, settings );
+			var baseOptions = getChartLinesBaseOptions( jsonData, datasets, colors );
+			var responsiveOptions = getChartLinesBaseResponsiveOptions( chartName );
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsDotsamaDex( jsonData ) {
+		function getChartOptionsDotsamaDex( chartName, jsonData ) {
 			var datasets = [
 				    {
 					    name: 'stellaswap',
@@ -1102,9 +1340,6 @@
 					    label: 'ArthSwap'
 				    }
 			    ],
-			    settings = {
-				    formatter: 'currency'
-			    },
 			    colors   = [
 				    '#66E1B6',
 				    '#C30D00',
@@ -1114,10 +1349,12 @@
 				    '#004BFF'
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, settings );
+			var baseOptions = getChartLinesBaseOptions( jsonData, datasets, colors );
+			var responsiveOptions = getChartLinesBaseResponsiveOptions( chartName );
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsDotsamaLendingProtocol( jsonData ) {
+		function getChartOptionsDotsamaLendingProtocol( chartName, jsonData ) {
 			var datasets       = [
 				    {
 					    name: 'starlay',
@@ -1130,9 +1367,6 @@
 					    label: 'Moonwell Apollo'
 				    }
 			    ],
-			    settings       = {
-				    formatter: 'currency'
-			    },
 			    colors         = [
 				    '#004BFF',
 				    '#C30D00',
@@ -1144,10 +1378,13 @@
 				    [ 'rgba(107,76,41,1)', 'rgba(107,76,41,0.4)' ]
 			    ];
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground );
+			var baseOptions       = getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground ),
+			    responsiveOptions = getChartLinesBaseResponsiveOptions( chartName );
+
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsAUsdIssuance( jsonData ) {
+		function getChartOptionsAUsdIssuance( chartName, jsonData ) {
 			var datasets       = [
 				    {
 					    name: 'acala',
@@ -1161,9 +1398,6 @@
 				    '#C30D00',
 				    '#004BFF'
 			    ],
-			    settings       = {
-				    formatter: 'currency'
-			    },
 			    areaBackground = [
 				    [ 'rgba(108,13,22,0.9)', 'rgba(108,13,22,0.3)' ],
 				    [ 'rgba(23,46,152,0.9)', 'rgba(23,46,152,0.3)' ]
@@ -1172,10 +1406,12 @@
 				    stack: 'total'
 			    };
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground, seriesOptions );
+			var baseOptions       = getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground, seriesOptions ),
+			    responsiveOptions = getChartLinesBaseResponsiveOptions( chartName );
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsRmrkCumulativeSales( jsonData ) {
+		function getChartOptionsRmrkCumulativeSales( chartName, jsonData ) {
 			var datasets          = [
 				    {
 					    name: 'cumulative_sum_of_amount',
@@ -1200,17 +1436,17 @@
 				    grid: {
 					    bottom: '3%'
 				    },
-				    yAxis: [
-					    {
-						    splitNumber: 4
-					    }
-				    ]
+				    yAxis: {
+					    splitNumber: 4
+				    }
 			    };
 
-			return getChartLinesBaseOptions( jsonData, datasets, colors, null, areaBackground, seriesOptions, chartExtraOptions );
+			var baseOptions       = getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground, seriesOptions, chartExtraOptions ),
+			    responsiveOptions = getChartLinesBaseResponsiveOptions( chartName );
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsRmrkDailySales( jsonData ) {
+		function getChartOptionsRmrkDailySales( chartName, jsonData ) {
 			var datasets    = [
 				    {
 					    name: 'kanbird',
@@ -1282,107 +1518,152 @@
 				} );
 			} );
 
-			return {
-				color: colors,
-				textStyle: {
-					fontFamily: fontFamily,
-					fontWeight: 500
-				},
-				tooltip: {
-					trigger: 'axis',
-					padding: [ 15, 20 ],
-					backgroundColor: '#21063C',
-					borderWidth: 0,
-					extraCssText: 'border-radius: 10px;box-shadow: 0 4px 50px rgba(161, 107, 216, 0.5);',
-					textStyle: {
-						fontFamily: fontFamily,
-						color: '#7B8098',
-						fontSize: 14,
-						fontWeight: '500'
-					},
-					axisPointer: {
-						type: 'shadow',
-						label: {
-							color: '#020722',
-							backgroundColor: '#4ccbc9'
-						},
-						crossStyle: {
-							color: 'rgba(255,255,255,0.3)'
-						},
-						lineStyle: {
-							type: [ 4, 4 ],
-							color: 'rgba(255,255,255,0.3)'
-						}
-					}
-				},
-				legend: defaultLegendSettings,
-				grid: {
-					left: '3%',
-					right: '3%',
-					top: '3%',
-					containLabel: true
-				},
-				xAxis: [
-					{
-						type: 'time',
-						boundaryGap: false,
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							show: false,
-							lineStyle: {
-								color: '#212845'
-							}
-						},
-						splitLine: {
-							show: true,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: {
-							label: {
-								color: '#66E1B6',
-								backgroundColor: '#262C4A'
-							}
-						},
-						axisLabel: {
-							formatter: '{dd} {MMM} {yy}',
-							color: '#7B8098'
-						}
-					}
-				],
-				yAxis: [
-					{
-						type: 'value',
-						axisLine: {
-							show: false
-						},
-						splitLine: {
-							show: true,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: {
-							label: {
-								color: '#66E1B6',
-								backgroundColor: '#262C4A'
-							}
-						},
-						axisLabel: {
-							color: '#7B8098'
-						}
-					}
-				],
-				series: chartSeries
-			};
+			var baseOptions       = {
+				    color: colors,
+				    textStyle: {
+					    fontFamily: fontFamily,
+					    fontWeight: 500
+				    },
+				    tooltip: {
+					    trigger: 'axis',
+					    padding: [ 15, 20 ],
+					    backgroundColor: '#21063C',
+					    borderWidth: 0,
+					    extraCssText: 'border-radius: 10px;box-shadow: 0 4px 50px rgba(161, 107, 216, 0.5);',
+					    textStyle: {
+						    fontFamily: fontFamily,
+						    color: '#7B8098',
+						    fontSize: 14,
+						    fontWeight: '500'
+					    },
+					    axisPointer: {
+						    type: 'shadow',
+						    label: {
+							    color: '#020722',
+							    backgroundColor: '#4ccbc9'
+						    },
+						    crossStyle: {
+							    color: 'rgba(255,255,255,0.3)'
+						    },
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: 'rgba(255,255,255,0.3)'
+						    }
+					    }
+				    },
+				    legend: defaultLegendSettings,
+				    grid: {
+					    left: '3%',
+					    right: '3%',
+					    top: '3%',
+					    containLabel: true
+				    },
+				    xAxis: {
+					    type: 'time',
+					    boundaryGap: false,
+					    axisTick: {
+						    show: false
+					    },
+					    axisLine: {
+						    show: false,
+						    lineStyle: {
+							    color: '#212845'
+						    }
+					    },
+					    splitLine: {
+						    show: true,
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: [ '#212845' ]
+						    }
+					    },
+					    axisPointer: {
+						    label: {
+							    color: '#66E1B6',
+							    backgroundColor: '#262C4A'
+						    }
+					    },
+					    axisLabel: {
+						    formatter: '{dd} {MMM} {yy}',
+						    color: '#7B8098'
+					    }
+				    },
+				    yAxis: {
+					    type: 'value',
+					    axisLine: {
+						    show: false
+					    },
+					    splitLine: {
+						    show: true,
+						    lineStyle: {
+							    type: [ 4, 4 ],
+							    color: [ '#212845' ]
+						    }
+					    },
+					    axisPointer: {
+						    label: {
+							    color: '#66E1B6',
+							    backgroundColor: '#262C4A'
+						    }
+					    },
+					    axisLabel: {
+						    color: '#7B8098'
+					    }
+				    },
+				    series: chartSeries
+			    },
+			    responsiveOptions = getChartResponsiveOptionsRmrkDailySales( chartName );
+
+			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsWebAssemblyUsage( jsonData ) {
+		function getChartResponsiveOptionsRmrkDailySales() {
+			var newOptions = {};
+
+			if ( window.innerWidth > 767 ) {
+				newOptions = {
+					yAxis: {
+						axisLabel: {
+							formatter: '{value}'
+						}
+					},
+					xAxis: {
+						splitNumber: 8,
+						axisLabel: {
+							formatter: '{dd} {MMM} {yy}'
+						}
+					}
+				};
+			} else {
+				newOptions = {
+					yAxis: {
+						axisLabel: {
+							formatter: function( value ) {
+								return moneyFormat( value );
+							}
+						}
+					},
+					xAxis: {
+						splitNumber: 4,
+						axisLabel: {
+							formatter: '{MMM} {yy}'
+						}
+					}
+				};
+
+				if ( window.innerWidth < 460 ) {
+					$.extend( newOptions, {
+						xAxis: {
+							splitNumber: 3
+						}
+					} )
+				}
+			}
+
+			return newOptions;
+		}
+
+		function getChartOptionsWebAssemblyUsage( chartName, jsonData ) {
 			var datasets       = [
 				    {
 					    name: 'notused',
@@ -1565,54 +1846,50 @@
 					top: '3%',
 					containLabel: true
 				},
-				xAxis: [
-					{
-						type: 'category',
-						data: [
-							'Rust',
-							'JavaScript',
-							'C++',
-							'Blazor',
-							'AssemblyScript',
-							'Python',
-							'Go',
-							'WAT',
-							'Zig',
-							'Java',
-							'Swift',
-							'Ruby',
-							'Grain'
-						],
-						axisLabel: {
-							interval: 0,
-							rotate: 30
-						}
+				xAxis: {
+					type: 'category',
+					data: [
+						'Rust',
+						'JavaScript',
+						'C++',
+						'Blazor',
+						'AssemblyScript',
+						'Python',
+						'Go',
+						'WAT',
+						'Zig',
+						'Java',
+						'Swift',
+						'Ruby',
+						'Grain'
+					],
+					axisLabel: {
+						interval: 0,
+						rotate: 30
 					}
-				],
-				yAxis: [
-					{
-						type: 'value',
-						axisLine: {
-							show: false
-						},
-						splitLine: {
-							show: true,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisLabel: {
-							formatter: '{value}%',
-							color: '#7B8098'
+				},
+				yAxis: {
+					type: 'value',
+					axisLine: {
+						show: false
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#212845' ]
 						}
+					},
+					axisLabel: {
+						formatter: '{value}%',
+						color: '#7B8098'
 					}
-				],
+				},
 				series: chartSeries
 			};
 		}
 
-		function getChartOptionsTreasuryOutput() {
+		function getChartOptionsTreasuryOutput( chartName ) {
 			var datasets = [
 				{
 					value: 470447,
@@ -1708,7 +1985,7 @@
 			};
 		}
 
-		function getChartLinesBaseOptions( jsonData, datasets, colors, settings, areaBackground, seriesOptions, chartExtraOptions ) {
+		function getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground, seriesOptions, chartExtraOptions ) {
 			var totalItems = jsonData.length,
 			    data       = [];
 
@@ -1790,80 +2067,156 @@
 					top: '3%',
 					containLabel: true
 				},
-				xAxis: [
-					{
-						type: 'time',
-						boundaryGap: false,
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							lineStyle: {
-								color: '#212845'
-							}
-						},
-						splitLine: {
-							show: false,
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: {
-							label: {
-								color: '#66E1B6',
-								backgroundColor: '#262C4A'
-							}
-						},
-						axisLabel: {
-							formatter: '{dd} {MMM} {yy}',
-							color: '#7B8098'
+				xAxis: {
+					type: 'time',
+					boundaryGap: false,
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#212845'
 						}
-					}
-				],
-				yAxis: [
-					{
-						type: 'value',
-						axisLine: {
-							show: false
-						},
-						splitNumber: 4,
-						splitLine: {
-							lineStyle: {
-								type: [ 4, 4 ],
-								color: [ '#212845' ]
-							}
-						},
-						axisPointer: {
-							label: {
-								color: '#66E1B6',
-								backgroundColor: '#262C4A'
-							}
-						},
-						axisLabel: {
-							color: '#7B8098'
+					},
+					splitLine: {
+						show: false,
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#212845' ]
 						}
+					},
+					axisPointer: {
+						label: {
+							color: '#66E1B6',
+							backgroundColor: '#262C4A'
+						}
+					},
+					axisLabel: {
+						formatter: '{dd} {MMM} {yy}',
+						color: '#7B8098'
 					}
-				],
+				},
+				yAxis: {
+					type: 'value',
+					axisLine: {
+						show: false
+					},
+					splitNumber: 4,
+					splitLine: {
+						lineStyle: {
+							type: [ 4, 4 ],
+							color: [ '#212845' ]
+						}
+					},
+					axisPointer: {
+						label: {
+							color: '#66E1B6',
+							backgroundColor: '#262C4A'
+						}
+					},
+					axisLabel: {
+						color: '#7B8098'
+					}
+				},
 				series: chartSeries
 			};
-
-			if ( typeof settings === 'object' && settings !== null ) {
-				if ( 'currency' === settings.formatter ) {
-					chartOptions.tooltip.valueFormatter = function( value ) {
-						return value ? '$' + numberWithCommas( value ) : '-';
-					};
-
-					chartOptions.yAxis[ 0 ].axisPointer.label.formatter = "${value}";
-					chartOptions.yAxis[ 0 ].axisLabel.formatter = "${value}";
-				}
-			}
 
 			if ( chartExtraOptions ) {
 				return $.extend( true, {}, chartOptions, chartExtraOptions );
 			}
 
 			return chartOptions;
+		}
+
+		function getChartLinesBaseResponsiveOptions( chartName ) {
+			var newOptions = {};
+
+			if ( window.innerWidth > 767 ) {
+				newOptions = {
+					xAxis: {
+						splitNumber: 8
+					}
+				};
+			} else {
+				newOptions = {
+					xAxis: {
+						splitNumber: 3
+					}
+				};
+
+				if ( window.innerWidth < 460 ) {
+					$.extend( true, newOptions, {
+						xAxis: {
+							splitNumber: 2
+						}
+					} );
+				}
+			}
+
+			var yAxis = {};
+			switch ( chartName ) {
+				case 'polkadot-parachain':
+				case 'kusama-parachain':
+				case 'dotsama-dex':
+				case 'dotsama-lending-protocol':
+				case 'ausd-issuance':
+					var tooltip = {
+						valueFormatter: function( value ) {
+							return value ? '$' + numberWithCommas( value ) : '-';
+						}
+					};
+					newOptions.tooltip = tooltip;
+
+					if ( window.innerWidth > 767 ) {
+						yAxis = {
+							axisPointer: {
+								label: {
+									formatter: "${value}"
+								}
+							},
+							axisLabel: {
+								formatter: "${value}"
+							}
+						};
+					} else {
+						yAxis = {
+							axisPointer: {
+								label: {
+									formatter: "${value}"
+								}
+							},
+							axisLabel: {
+								formatter: function( value ) {
+									return value ? '$' + moneyFormat( value ) : '-';
+								}
+							}
+						};
+					}
+					newOptions.yAxis = yAxis;
+
+					break;
+				case 'rmrk-cumulative-sales':
+					if ( window.innerWidth > 767 ) {
+						yAxis = {
+							axisLabel: {
+								formatter: "{value}"
+							}
+						};
+					} else {
+						yAxis = {
+							axisLabel: {
+								formatter: function( value ) {
+									return value ? moneyFormat( value ) : '-';
+								}
+							}
+						};
+					}
+					newOptions.yAxis = yAxis;
+
+					break;
+			}
+
+			return newOptions;
 		}
 
 		function getChartDataPolkadotAccOverview() {
