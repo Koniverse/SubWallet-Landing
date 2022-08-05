@@ -58,7 +58,7 @@
 				    fontFamily: fontFamily,
 				    color: '#ffffff',
 				    fontSize: 13,
-				    fontWeight: '600',
+				    fontWeight: '600'
 			    }
 		    },
 		    defaultAxisPointerSettings = {
@@ -526,11 +526,11 @@
 		function getChartOptionsDevActComparison( chartName, jsonData ) {
 			var totalItems = jsonData.length,
 			    data       = {
+				    cosmos: [],
 				    dot: [],
 				    eth: [],
 				    sol: [],
-				    near: [],
-				    matic: []
+				    btc: []
 			    },
 			    colors     = [
 				    '#66E1B6',
@@ -544,8 +544,8 @@
 				data.dot.push( [ jsonData[ i ].date, jsonData[ i ].dot ] );
 				data.eth.push( [ jsonData[ i ].date, jsonData[ i ].eth ] );
 				data.sol.push( [ jsonData[ i ].date, jsonData[ i ].sol ] );
-				data.near.push( [ jsonData[ i ].date, jsonData[ i ].near ] );
-				data.matic.push( [ jsonData[ i ].date, jsonData[ i ].matic ] );
+				data.cosmos.push( [ jsonData[ i ].date, jsonData[ i ].near ] );
+				data.btc.push( [ jsonData[ i ].date, jsonData[ i ].matic ] );
 			}
 
 			var baseOptions = {
@@ -608,8 +608,8 @@
 				},
 				series: [
 					{
-						name: 'Near',
-						data: data.near,
+						name: 'Cosmos',
+						data: data.cosmos,
 						itemStyle: {
 							color: colors[ 0 ]
 						},
@@ -652,6 +652,21 @@
 						itemStyle: {
 							color: colors[ 3 ]
 						},
+						areaStyle: {
+							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
+								{
+									offset: 0.5,
+									color: 'rgba(79,91,60,1)'
+								}, {
+									offset: 1,
+									color: 'rgba(79,91,60,0)'
+								}
+							] ),
+							opacity: 1
+						},
+						lineStyle: {
+							width: 0
+						},
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
@@ -660,8 +675,8 @@
 						}
 					},
 					{
-						name: 'Matic',
-						data: data.matic,
+						name: 'Bitcoin',
+						data: data.btc,
 						itemStyle: {
 							color: colors[ 4 ]
 						},
@@ -1434,16 +1449,33 @@
 					    show: false
 				    },
 				    grid: {
+					    left: 54,
 					    bottom: '3%'
 				    },
+				    xAxis: {
+					    splitLine: {
+						    show: true
+					    }
+				    },
 				    yAxis: {
+					    name: 'Volume (KSM)',
+					    nameLocation: 'middle',
+					    nameGap: 83,
+					    nameTextStyle: {
+						    fontFamily: fontFamily,
+						    color: '#7B8098',
+						    fontSize: 15,
+						    fontWeight: '500'
+					    },
 					    splitNumber: 4
 				    }
 			    };
 
 			var baseOptions       = getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground, seriesOptions, chartExtraOptions ),
 			    responsiveOptions = getChartLinesBaseResponsiveOptions( chartName );
-			return $.extend( true, baseOptions, responsiveOptions );
+			$.extend( true, baseOptions, responsiveOptions );
+
+			return baseOptions;
 		}
 
 		function getChartOptionsRmrkDailySales( chartName, jsonData ) {
@@ -1553,7 +1585,7 @@
 				    },
 				    legend: defaultLegendSettings,
 				    grid: {
-					    left: '3%',
+					    left: 78,
 					    right: '3%',
 					    top: '3%',
 					    containLabel: true
@@ -1608,13 +1640,24 @@
 					    },
 					    axisLabel: {
 						    color: '#7B8098'
+					    },
+					    name: 'Volume (KSM)',
+					    nameLocation: 'middle',
+					    nameGap: 100,
+					    nameTextStyle: {
+						    fontFamily: fontFamily,
+						    color: '#7B8098',
+						    fontSize: 15,
+						    fontWeight: '500'
 					    }
 				    },
 				    series: chartSeries
 			    },
 			    responsiveOptions = getChartResponsiveOptionsRmrkDailySales( chartName );
 
-			return $.extend( true, baseOptions, responsiveOptions );
+			$.extend( true, baseOptions, responsiveOptions );
+			console.log( baseOptions );
+			return baseOptions;
 		}
 
 		function getChartResponsiveOptionsRmrkDailySales() {
@@ -1622,7 +1665,14 @@
 
 			if ( window.innerWidth > 767 ) {
 				newOptions = {
+					grid: {
+						left: 78
+					},
 					yAxis: {
+						nameGap: 100,
+						nameTextStyle: {
+							fontSize: 15
+						},
 						axisLabel: {
 							formatter: '{value}'
 						}
@@ -1636,7 +1686,14 @@
 				};
 			} else {
 				newOptions = {
+					grid: {
+						left: 50
+					},
 					yAxis: {
+						nameGap: 50,
+						nameTextStyle: {
+							fontSize: 14
+						},
 						axisLabel: {
 							formatter: function( value ) {
 								return moneyFormat( value );
@@ -1733,7 +1790,7 @@
 			    data           = [],
 			    chartSeries    = [];
 
-			datasets.forEach( function( dataset, index ) {
+			datasets.forEach( function( dataset ) {
 				data[ dataset.name ] = [];
 			} );
 
@@ -2213,6 +2270,50 @@
 					}
 					newOptions.yAxis = yAxis;
 
+					break;
+			}
+
+			switch ( chartName ) {
+				case 'rmrk-cumulative-sales':
+					if ( window.innerWidth > 767 ) {
+						$.extend( true, newOptions, {
+							grid: {
+								left: 54
+							},
+							yAxis: {
+								nameTextStyle: {
+									fontSize: 15
+								},
+								nameGap: 83
+							},
+							series: [
+								{
+									lineStyle: {
+										width: 4
+									}
+								}
+							]
+						} );
+					} else {
+						$.extend( true, newOptions, {
+							grid: {
+								left: 40
+							},
+							yAxis: {
+								nameTextStyle: {
+									fontSize: 14
+								},
+								nameGap: 56
+							},
+							series: [
+								{
+									lineStyle: {
+										width: 2
+									}
+								}
+							]
+						} );
+					}
 					break;
 			}
 

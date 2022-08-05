@@ -208,7 +208,7 @@
 	font-weight: 500;
 	line-height: 26px;
 	color: #7b8098;
-	max-width: 600px;
+	max-width: 570px;
 	margin: 0 10px 0 0;
 
 	p {
@@ -1064,6 +1064,15 @@
 @media screen and (min-width: 1921px) {
 	.section-reports-hero .section-title {
 		font-size: 150px;
+	}
+}
+
+@media screen and (max-width: 1600px) {
+	.section-report-holder-investor {
+		.section-shape-diamond {
+			right: 2%;
+			top: 150px;
+		}
 	}
 }
 
