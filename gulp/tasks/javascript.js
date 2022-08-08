@@ -5,57 +5,33 @@ var gulp        = require( 'gulp' ),
     config      = require( '../config.json' ),
     log         = require( 'fancy-log' ),
     reportError = require( '../report-bug' ),
-    list        = config.compileMinifyJS;
+    list        = config.compileMinifyJS,
+    min         = '.min',
+    extension   = '.js';
 
-gulp.task( 'javascript', function() {
-	var results,
-	    min       = '.min',
-	    extension = '.js';
+gulp.task( 'javascript:dev', function() {
+	var results;
 	list.forEach( function( item ) {
-		if ( item.bothVersion ) {
+		results = gulp.src( item.files )
+		              .pipe( $.plumber( { errorHandler: reportError } ) )
+		              .pipe( $.concat( item.name + extension ) )
+		              .pipe( gulp.dest( dist ) );
+	} );
+	return results;
+} );
 
-			// Minify version.
-			results = gulp.src( item.files )
-			              .pipe( $.plumber( { errorHandler: reportError } ) )
-			              .pipe( $.sourcemaps.init() )
-			              .pipe( $.concat( item.name + min + extension ) )
-			              .pipe( $.uglify() )
-			              .on( 'error', function( err ) {
-				              log.error( err.toString() );
-				              this.emit( 'end' );
-			              } )
-			              .pipe( $.sourcemaps.write( '/sourcemap', {
-				              addComment: false
-			              } ) )
-			              .pipe( gulp.dest( dist ) );
-
-			// Normal version.
-			results = gulp.src( item.files )
-			              .pipe( $.plumber( { errorHandler: reportError } ) )
-			              .pipe( $.concat( item.name + extension ) )
-			              .pipe( gulp.dest( dist ) );
-		} else {
-			if ( item.minify ) {
-				results = gulp.src( item.files )
-				              .pipe( $.plumber( { errorHandler: reportError } ) )
-				              .pipe( $.sourcemaps.init() )
-				              .pipe( $.concat( item.name + min + extension ) )
-				              .pipe( $.uglify() )
-				              .on( 'error', function( err ) {
-					              log.error( err.toString() );
-					              this.emit( 'end' );
-				              } )
-				              .pipe( $.sourcemaps.write( '/sourcemap', {
-					              addComment: false
-				              } ) )
-				              .pipe( gulp.dest( dist ) );
-			} else {
-				results = gulp.src( item.files )
-				              .pipe( $.plumber( { errorHandler: reportError } ) )
-				              .pipe( $.concat( item.name + extension ) )
-				              .pipe( gulp.dest( dist ) );
-			}
-		}
+gulp.task( 'javascript:production', function() {
+	var results;
+	list.forEach( function( item ) {
+		results = gulp.src( item.files )
+		              .pipe( $.plumber( { errorHandler: reportError } ) )
+		              .pipe( $.concat( item.name + extension ) )
+		              .pipe( $.uglify() )
+		              .on( 'error', function( err ) {
+			              log.error( err.toString() );
+			              this.emit( 'end' );
+		              } )
+		              .pipe( gulp.dest( dist ) );
 	} );
 	return results;
 } );

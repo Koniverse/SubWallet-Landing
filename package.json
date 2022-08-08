@@ -39,7 +39,7 @@
 	},
 	"scripts": {
 		"push:test": "rsync -avz -e 'ssh -p 2222' /Volumes/DATA/repos/subwallet/docs/* www-data@178.128.57.30:/opt/easyengine/sites/project.thememove.com/app/htdocs/subwallet --delete",
-		"build": "gulp javascript && gulp sass:full"
+		"build": "gulp javascript:production && gulp sass:full"
 	},
 	"dependencies": {
 		"css-size": "^4.0.1",
