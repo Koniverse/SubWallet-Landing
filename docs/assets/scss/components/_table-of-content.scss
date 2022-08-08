@@ -43,7 +43,7 @@
 	cursor: pointer;
 	top: 20px;
 	left: 0;
-
+	z-index: 1;
 	&:hover {
 		color: $button-hover-text;
 		background: $button-hover-background;
@@ -63,21 +63,38 @@
 .table-of-contents {
 	position: fixed;
 	top: 0;
-	right: 100%;
-	background: linear-gradient(270deg, #0f1533 0%, #020722 97.59%);
-	height: 100%;
-	width: 290px;
-	max-width: calc(100% - 50px);
+	bottom: 0;
+	right: 0;
+	left: 0;
 	z-index: 100000; // Less than popup
-	transition: all .5s;
-
-	&.open {
-		transform: translateX(100%);
-		box-shadow: -3px 0px 50px -2px rgba(0, 0, 0, 0.14);
-	}
+	transition: all .25s;
+	background: rgba(15, 21, 51, 0.5);
+	cursor: url(../images/cursor/light-close.png) 16 16, pointer;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
 
 	.panel {
+		position: absolute;
+		top: 0;
+		right: 100%;
+		background: linear-gradient(270deg, #0f1533 0%, #020722 97.59%);
+		height: 100%;
+		width: 290px;
+		max-width: calc(100% - 50px);
 		padding: 84px 0 50px;
+		transition: all .5s;
+	}
+
+	&.open {
+		pointer-events: auto;
+		opacity: 1;
+		visibility: visible;
+
+		.panel {
+			transform: translateX(100%);
+			box-shadow: -3px 0px 50px -2px rgba(0, 0, 0, 0.14);
+		}
 	}
 
 	.panel-content {

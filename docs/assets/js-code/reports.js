@@ -156,6 +156,18 @@
 				$tableOfContents.removeClass( 'open' );
 			} );
 
+			$tableOfContents.on( 'click', function( e ) {
+				if ( e.target !== this ) {
+					return;
+				}
+
+				$tableOfContents.removeClass( 'open' );
+			} );
+
+			$tableOfContents.on( 'click', 'a', function( e ) {
+				$tableOfContents.removeClass( 'open' );
+			} );
+
 			$( document ).on( 'click', '#btn-open-panel', function( e ) {
 				e.preventDefault();
 				e.stopPropagation();
