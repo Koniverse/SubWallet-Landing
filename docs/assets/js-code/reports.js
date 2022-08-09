@@ -2022,16 +2022,19 @@
 							rich: {
 								a: {
 									color: '#66E1B6',
+									fontFamily: fontFamily,
 									fontWeight: 700,
 									fontSize: '30'
 								},
 								x: {
 									color: '#ffffff',
+									fontFamily: fontFamily,
 									fontWeight: 700,
 									fontSize: '30'
 								},
 								t: {
 									color: '#A8ADC3',
+									fontFamily: fontFamily,
 									fontWeight: 500,
 									fontSize: 18,
 									padding: [ 18, 0, 0, 0 ]
