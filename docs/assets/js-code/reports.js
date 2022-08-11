@@ -545,11 +545,11 @@
 				    btc: []
 			    },
 			    colors     = [
-				    '#66E1B6',
-				    '#9D3BEA',
-				    '#EC4E44',
-				    '#889641',
-				    '#004BFF'
+				    '#4CFCFC',
+				    '#004BFF',
+				    '#8E54F7',
+				    '#E6007A',
+				    '#EA973D'
 			    ];
 
 			for ( var i = 0; i < totalItems; i ++ ) {
@@ -664,7 +664,7 @@
 						itemStyle: {
 							color: colors[ 3 ]
 						},
-						areaStyle: {
+						/*areaStyle: {
 							color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
 								{
 									offset: 0.5,
@@ -678,7 +678,7 @@
 						},
 						lineStyle: {
 							width: 0
-						},
+						},*/
 						type: 'line',
 						smooth: true,
 						showSymbol: false,
@@ -735,7 +735,7 @@
 
 		function getChartOptionsDotAccOverview() {
 			var colors            = [
-				    '#66E1B6'
+				    '#E6007A'
 			    ],
 			    data              = getChartDataPolkadotAccOverview(),
 			    baseOptions       = {
@@ -808,12 +808,12 @@
 					    areaStyle: {
 						    color: new echarts.graphic.LinearGradient( 0.5, 0.5, 1, 1, [
 							    {
-								    offset: 0,
-								    color: 'rgba(14,64,82,1)'
+								    offset: 0.6,
+								    color: 'rgba(80,9,72,0.6)'
 							    },
 							    {
 								    offset: 1,
-								    color: 'rgba(7, 14, 48,0)'
+								    color: 'rgba(80,9,72,0)'
 							    }
 						    ] )
 					    },
@@ -1103,8 +1103,8 @@
 			    ],
 			    colors     = [
 				    '#66E1B6',
-				    '#9D3BEA',
-				    '#004BFF'
+				    '#EA1B53',
+				    '#F7A21B'
 			    ],
 			    totalItems = jsonData.length,
 			    data       = [];
@@ -1189,16 +1189,7 @@
 						    name: 'Income',
 						    data: data.income,
 						    areaStyle: {
-							    color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
-								    {
-									    offset: 0,
-									    color: 'rgba(102,225,182,0.9)'
-								    },
-								    {
-									    offset: 1,
-									    color: 'rgba(102,225,182,0.4)'
-								    }
-							    ] )
+							    opacity: 0.2
 						    },
 						    itemStyle: {
 							    color: colors[ 0 ]
@@ -1213,18 +1204,20 @@
 					    {
 						    name: 'Output',
 						    data: data.output,
+						    zlevel: 3,
 						    areaStyle: {
 							    opacity: 1,
-							    color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
+							    color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
 								    {
 									    offset: 0,
-									    color: 'rgba(77,35,135,1)'
+									    color: 'rgba(107,20,63,1)'
 								    },
 								    {
 									    offset: 1,
-									    color: 'rgba(77,35,135,1)'
+									    color: 'rgba(42,16,53,0)'
 								    }
 							    ] )
+
 						    },
 						    itemStyle: {
 							    color: colors[ 1 ]
@@ -1240,14 +1233,15 @@
 						    name: 'Treasury',
 						    data: data.treasury_balance,
 						    areaStyle: {
+							    opacity: 1,
 							    color: new echarts.graphic.LinearGradient( 0, 0, 0, 1, [
 								    {
 									    offset: 0,
-									    color: 'rgba(8, 62, 136,0.9)'
+									    color: 'rgba(92,91,61,1)'
 								    },
 								    {
-									    offset: 1,
-									    color: 'rgba(8, 62, 136,0.4)'
+									    offset: 0.7,
+									    color: 'rgba(7,14,48,1)'
 								    }
 							    ] )
 						    },
@@ -1307,12 +1301,12 @@
 				    }
 			    ],
 			    colors         = [
-				    '#66E1B6',
-				    '#9D3BEA'
+				    '#2F74F7',
+				    '#EA1B53'
 			    ],
 			    areaBackground = [
-				    [ 'rgba(22,53,57,0.9)', 'rgba(22,53,57,0)' ],
-				    [ 'rgba(72,33,128,0.9)', 'rgba(72,33,128,0)' ]
+				    [ 'rgba(26,65,149,1)', 'rgba(26,65,149,0)' ],
+				    [ 'rgba(102,19,63,1)', 'rgba(102,19,63,0.3)' ]
 			    ];
 
 			var baseOptions = getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground );
@@ -1335,8 +1329,8 @@
 			    ],
 			    colors   = [
 				    '#C30D00',
-				    '#F7A21B',
-				    '#004BFF'
+				    '#5A25F0',
+				    '#FB7930'
 			    ];
 
 			var baseOptions = getChartLinesBaseOptions( jsonData, datasets, colors );
@@ -1395,14 +1389,14 @@
 				    }
 			    ],
 			    colors         = [
-				    '#004BFF',
-				    '#C30D00',
-				    '#F7A21B'
+				    '#D50075',
+				    '#B8E94A',
+				    '#5C42FB'
 			    ],
 			    areaBackground = [
-				    [ 'rgba(31,65,161,1)', 'rgba(31,65,161,0.4)' ],
-				    [ 'rgba(123,19,22,1)', 'rgba(123,19,22,0.4)' ],
-				    [ 'rgba(107,76,41,1)', 'rgba(107,76,41,0.4)' ]
+				    [ 'rgba(95,16,102,1)', 'rgba(95,16,102,0.4)' ],
+				    [ 'rgba(77,99,64,1)', 'rgba(77,99,64,0.4)' ],
+				    [ 'rgba(37,33,122,1)', 'rgba(37,33,122,0.4)' ]
 			    ];
 
 			var baseOptions       = getChartLinesBaseOptions( jsonData, datasets, colors, areaBackground ),
@@ -1446,10 +1440,10 @@
 				    }
 			    ],
 			    colors            = [
-				    '#004BFF'
+				    '#CA2B77'
 			    ],
 			    areaBackground    = [
-				    [ 'rgba(23,46,152,0.9)', 'rgba(23,46,152,0.3)' ]
+				    [ 'rgba(86,25,77,1)', 'rgba(86,25,77,0)' ]
 			    ],
 			    seriesOptions     = {
 				    lineStyle: {
