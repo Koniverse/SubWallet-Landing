@@ -20,6 +20,16 @@
 		background: url(../images/reports/reports-hero-bg.jpg) no-repeat top center;
 		background-size: 100% auto;
 	}
+
+	.section-description a {
+		color: $primary-color;
+		font-weight: 700;
+		text-underline-offset: 2px;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .block-report-table,
@@ -344,6 +354,16 @@
 		font-weight: 500;
 		width: var(--text-width, 100%);
 		max-width: 100%;
+
+		a {
+			color: $primary-color;
+			font-weight: 700;
+			text-underline-offset: 2px;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 
 		mark {
 			font-weight: 700;
