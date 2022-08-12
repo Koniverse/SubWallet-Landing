@@ -93,7 +93,6 @@
 		$( window ).on( 'resize', function() {
 			clearTimeout( resizeTimer );
 			resizeTimer = setTimeout( function() {
-				console.log( 'Resize all charts' );
 				// Run code here, resizing has "stopped".
 				$allCharts.each( function() {
 					var $chart        = $( this ),
@@ -1662,7 +1661,6 @@
 			    responsiveOptions = getChartResponsiveOptionsRmrkDailySales( chartName );
 
 			$.extend( true, baseOptions, responsiveOptions );
-			console.log( baseOptions );
 			return baseOptions;
 		}
 
@@ -2607,33 +2605,39 @@
 		}
 
 		function getChartDataVcPolkadot() {
-			/*var data = [
-				[ 'category', 'investing', 'total', 'investing_percent', 'total_percent' ],
-				[ 'H1 2021', 19, 44, null, null ],
-				[ 'Q3 2021', 21, 53, null, null ],
-				[ 'Q4 2021', 24, 57, null, null ],
-				[ 'H1 2022', 29, 82, null, null ]
-			];
+			var originalData = [
+				    [ 'category', 'investing', 'total' ],
+				    [ 'H1 2021', 19, 44 ],
+				    [ 'Q3 2021', 21, 53 ],
+				    [ 'Q4 2021', 24, 57 ],
+				    [ 'H1 2022', 29, 82 ]
+			    ],
+			    data         = [
+				    [
+					    'category',
+					    'investing_percent', // Data to render investing bar.
+					    'total_percent',  // Data to render total VC bar.
+					    'investing',// Data to render investing label.
+					    'total' // Data to render total VC label
+				    ]
+			    ];
 
-			for ( var i = 1; i < data.length; i ++ ) {
-				var investing = data[ i ][ 1 ];
-				var total = data[ i ][ 2 ];
-				var sum = investing + total;
+			// Calculate percent of items.
+			for ( var i = 1; i < originalData.length; i ++ ) {
+				var investing        = originalData[ i ][ 1 ],
+				    total            = originalData[ i ][ 2 ],
+				    investingPercent = precisionRoundMod( investing / total * 100, 2 );
 
-				var investingPercent = precisionRoundMod( investing / sum * 100, 2 );
-				var totalPercent = precisionRoundMod( 100 - investingPercent, 2 );
+				data.push( [
+					originalData[ i ][ 0 ],
+					investingPercent,
+					100,
+					investing,
+					total
+				] );
+			}
 
-				data[ i ][ 3 ] = investingPercent;
-				data[ i ][ 4 ] = totalPercent;
-			}*/
-
-			return [
-				[ 'category', 'investing_percent', 'total_percent', 'investing', 'total' ],
-				[ 'H1 2021', 30.16, 69.84, 19, 44 ],
-				[ 'Q3 2021', 28.38, 71.62, 21, 53 ],
-				[ 'Q4 2021', 29.63, 70.37, 24, 57 ],
-				[ 'H1 2022', 26.13, 73.87, 29, 82 ]
-			];
+			return data;
 		}
 
 	}( jQuery )
