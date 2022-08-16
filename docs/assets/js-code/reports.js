@@ -912,7 +912,9 @@
 						}
 					}
 				} ),
-				legend: defaultLegendSettings,
+				legend: $.extend( true, {}, defaultLegendSettings, {
+					selectedMode: false
+				} ),
 				grid: {
 					left: '3%',
 					right: '3%',
