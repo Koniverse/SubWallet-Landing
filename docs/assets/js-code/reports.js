@@ -5,6 +5,7 @@
 		var baseUrl = document.baseURI;
 
 		baseUrl = baseUrl.replace( 'report.html', 'assets/data/' );
+		baseUrl = baseUrl.replace( 'bao-cao.html', 'assets/data/' );
 
 		var $allCharts                 = $( '.block-chart' ),
 		    resizeTimer,
