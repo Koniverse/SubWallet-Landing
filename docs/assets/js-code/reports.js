@@ -5,7 +5,7 @@
 		var baseUrl = location.origin;
 		var partname = location.pathname.split( '/' );
 
-		for ( var i = 0; i < partname.length - 1; i ++ ) {
+		for ( var i = 0; i < partname.length - 2; i ++ ) {
 			if ( '' !== partname[ i ] ) {
 				baseUrl += '/' + partname[ i ];
 			}
