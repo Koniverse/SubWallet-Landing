@@ -64,7 +64,7 @@
 			background: linear-gradient(
 					-135deg, #4a75ad 0%, rgba(43, 54, 28, 0) 53.57%, #42703d 100%);
 			//box-shadow: 0 4px 40px rgba(144, 255, 44, .2);
-			box-shadow: 0 4px 40px #344D37;
+			box-shadow: 0 4px 40px #344d37;
 		}
 
 		&:after {
@@ -107,7 +107,7 @@
 		}
 
 		.name {
-			font-size: 32px;
+			font-size: 24px;
 			font-weight: 600;
 			line-height: 1.375;
 		}
@@ -121,7 +121,7 @@
 		.position {
 			font-weight: 500;
 			margin: 4px 0 0;
-			font-size: 20px;
+			font-size: 18px;
 		}
 	}
 
@@ -161,16 +161,6 @@
 			font-size: 16px;
 		}
 
-		&.block-team-large {
-			.name {
-				font-size: 26px;
-			}
-
-			.position {
-				font-size: 18px;
-			}
-		}
-
 		&.block-team-minimal {
 			.block-frame-content {
 				padding: 30px;
@@ -191,7 +181,7 @@
 
 		&.block-team-large {
 			.name {
-				font-size: 22px;
+				font-size: 20px;
 			}
 
 			.position {
