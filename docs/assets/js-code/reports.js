@@ -905,7 +905,7 @@
 					},
 					trigger: 'axis',
 					axisPointer: {
-						type: 'shadow',
+						type: 'none',
 						label: {
 							color: '#020722',
 							backgroundColor: '#4ccbc9'
@@ -996,9 +996,6 @@
 						itemStyle: {
 							borderRadius: [ 8, 0, 0, 8 ]
 						},
-						emphasis: {
-							focus: 'series'
-						},
 						datasetIndexnumber: 4
 						//dimensions: [ 'investing_percent' ],
 						/*encode: {
@@ -1021,9 +1018,6 @@
 						barMaxWidth: 48,
 						itemStyle: {
 							borderRadius: [ 0, 8, 8, 0 ]
-						},
-						emphasis: {
-							focus: 'series'
 						},
 						datasetIndexnumber: 5
 						//dimensions: [ 'total_percent' ]
