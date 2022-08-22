@@ -35,6 +35,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
+
+	.button {
+		margin: 0 0 0 10px;
+	}
 }
 
 .header-center {
@@ -114,6 +118,24 @@
 
 .navbar-toggler {
 	min-height: 0;
+}
+
+@media only screen and (max-width: 1500px) {
+	.language-switcher {
+		.current-lang {
+			.lang-label {
+				display: none;
+			}
+		}
+	}
+}
+
+
+@media only screen and (max-width: 1400px) {
+	.primary-menu .nav-link {
+		font-size: 16px;
+		padding: 6px 15px;
+	}
 }
 
 @include media-breakpoint-down(md) {

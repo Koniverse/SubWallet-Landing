@@ -11,7 +11,9 @@
 .report-title {
 	text-transform: uppercase;
 	font-size: 56px;
-	line-height: 1.142;
+	/*line-height: 1.142;*/
+	/* Fix text croped for VI */
+	line-height: 1.28;
 }
 
 .page-reports {
@@ -415,6 +417,10 @@
 
 	.section-header {
 		margin: 0 0 208px;
+	}
+
+	.section-header-inner {
+		max-width: 100%;
 	}
 
 	.section-shape-dot {
