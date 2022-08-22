@@ -2,10 +2,16 @@
 	function( $ ) {
 		'use strict';
 
-		var baseUrl = document.baseURI;
+		var baseUrl = location.origin;
+		var partname = location.pathname.split( '/' );
 
-		baseUrl = baseUrl.replace( 'report.html', 'assets/data/' );
-		baseUrl = baseUrl.replace( 'bao-cao.html', 'assets/data/' );
+		for ( var i = 0; i < partname.length - 1; i ++ ) {
+			if ( '' !== partname[ i ] ) {
+				baseUrl += '/' + partname[ i ];
+			}
+		}
+
+		baseUrl += '/assets/data/';
 
 		var $allCharts                 = $( '.block-chart' ),
 		    resizeTimer,
