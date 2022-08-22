@@ -6,14 +6,14 @@
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-fill-color: transparent;
+	/** Fix text gradient cropped **/
+	padding-top: .1785em;
 }
 
 .report-title {
 	text-transform: uppercase;
 	font-size: 56px;
-	/*line-height: 1.142;*/
-	/* Fix text croped for VI */
-	line-height: 1.28;
+	line-height: 1.142;
 }
 
 .page-reports {
