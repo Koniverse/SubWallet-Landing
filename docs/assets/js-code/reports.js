@@ -132,8 +132,8 @@
 								break;
 							case 'polkadot-parachain':
 							case 'kusama-parachain':
-							case 'dotsama-dex':
-							case 'dotsama-lending-protocol':
+							case 'polkadot-dex':
+							case 'polkadot-lending-protocol':
 							case 'ausd-issuance':
 							case 'rmrk-cumulative-sales':
 								chartOptions = getChartLinesBaseResponsiveOptions( chartName );
@@ -262,10 +262,10 @@
 						case 'kusama-parachain':
 							chartOptions = getChartOptionsKusamaParachain( chartName, jsonData );
 							break;
-						case 'dotsama-dex':
+						case 'polkadot-dex':
 							chartOptions = getChartOptionsDotsamaDex( chartName, jsonData );
 							break;
-						case 'dotsama-lending-protocol':
+						case 'polkadot-lending-protocol':
 							chartOptions = getChartOptionsDotsamaLendingProtocol( chartName, jsonData );
 							break;
 						case 'ausd-issuance':
@@ -2224,8 +2224,8 @@
 			switch ( chartName ) {
 				case 'polkadot-parachain':
 				case 'kusama-parachain':
-				case 'dotsama-dex':
-				case 'dotsama-lending-protocol':
+				case 'polkadot-dex':
+				case 'polkadot-lending-protocol':
 				case 'ausd-issuance':
 					var tooltip = {
 						valueFormatter: function( value ) {
