@@ -16,7 +16,7 @@ var lang = {
 	usedOccasionally: 'Have used occasionally',
 	useSometimes: 'Use sometimes',
 	useFrequently: 'Use frequently',
-	other: 'Other'
+	others: 'Others'
 };
 
 window.SubWallet = window.SubWallet || {};
