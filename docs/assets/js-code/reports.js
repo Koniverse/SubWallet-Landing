@@ -2,6 +2,7 @@
 	function( $ ) {
 		'use strict';
 
+		var locate = window.SubWallet.Localization;
 		var baseUrl = location.origin;
 		var partname = location.pathname.split( '/' );
 
@@ -366,7 +367,7 @@
 				yAxis: [
 					{
 						type: 'value',
-						name: 'KSM Price',
+						name: locate.ksmPrice,
 						nameTextStyle: {
 							fontSize: 0
 						},
@@ -396,7 +397,7 @@
 					},
 					{
 						type: 'value',
-						name: 'DOT Price',
+						name: locate.dotPrice,
 						nameTextStyle: {
 							fontSize: 0
 						},
@@ -420,7 +421,7 @@
 						}
 					}, {
 						type: 'value',
-						name: 'Development Activity',
+						name: locate.developmentActivity,
 						nameTextStyle: {
 							fontSize: 0
 						},
@@ -446,7 +447,7 @@
 				],
 				series: [
 					{
-						name: 'KSM Price',
+						name: locate.ksmPrice,
 						data: data.kusama,
 						itemStyle: {
 							color: colors[ 0 ]
@@ -460,7 +461,7 @@
 						}
 					},
 					{
-						name: 'DOT Price',
+						name: locate.dotPrice,
 						data: data.polkadot,
 						itemStyle: {
 							color: colors[ 1 ]
@@ -475,7 +476,7 @@
 						}
 					},
 					{
-						name: 'Development Activity',
+						name: locate.developmentActivity,
 						data: data.dev,
 						areaStyle: {
 							color: new echarts.graphic.LinearGradient( 0, 0, 1, 1, [
@@ -981,7 +982,7 @@
 					{
 						type: 'bar',
 						stack: 'total',
-						name: 'VCs Investing in Polkadot',
+						name: locate.dotVCsInvesting,
 						//data: data.investing,
 						label: {
 							fontFamily: fontFamily,
@@ -1005,7 +1006,7 @@
 					}, {
 						type: 'bar',
 						stack: 'total',
-						name: 'Total VCs',
+						name: locate.totalVCs,
 						//data: data.total,
 						label: {
 							fontFamily: fontFamily,
@@ -1094,13 +1095,13 @@
 			var datasets   = [
 				    {
 					    name: 'income',
-					    label: 'Income'
+					    label: locate.income
 				    }, {
 					    name: 'output',
-					    label: 'Output'
+					    label: locate.output
 				    }, {
 					    name: 'treasury_balance',
-					    label: 'Treasury'
+					    label: locate.treasury
 				    }
 			    ],
 			    colors     = [
@@ -1188,7 +1189,7 @@
 				    },
 				    series: [
 					    {
-						    name: 'Income',
+						    name: locate.income,
 						    data: data.income,
 						    areaStyle: {
 							    opacity: 0.2
@@ -1204,7 +1205,7 @@
 						    }
 					    },
 					    {
-						    name: 'Output',
+						    name: locate.output,
 						    data: data.output,
 						    zlevel: 3,
 						    areaStyle: {
@@ -1232,7 +1233,7 @@
 						    }
 					    },
 					    {
-						    name: 'Treasury',
+						    name: locate.treasury,
 						    data: data.treasury_balance,
 						    areaStyle: {
 							    opacity: 1,
@@ -1514,7 +1515,7 @@
 					    label: 'KANBG'
 				    }, {
 					    name: 'others',
-					    label: 'Others'
+					    label: locate.others
 				    }
 			    ],
 			    colors      = [
@@ -1731,17 +1732,17 @@
 			var datasets       = [
 				    {
 					    name: 'notused',
-					    label: 'Not used'
+					    label: locate.notUsed
 				    }, {
 					    name: 'occasionally',
-					    label: 'Have used occasionally'
+					    label: locate.usedOccasionally
 				    }, {
 					    name: 'sometimes',
-					    label: 'Use sometimes'
+					    label: locate.useSometimes
 				    },
 				    {
 					    name: 'frequently',
-					    label: 'Use frequently'
+					    label: locate.useFrequently
 				    }
 			    ],
 			    datasetsLength = datasets.length,
@@ -1957,16 +1958,16 @@
 			var datasets = [
 				{
 					value: 470447,
-					name: 'Proposal'
+					name: locate.proposal
 				}, {
 					value: 12212,
-					name: 'Tips'
+					name: locate.tips
 				}, {
 					value: 1103232,
-					name: 'Bounties'
+					name: locate.bounties
 				}, {
 					value: 5070182,
-					name: 'Burnt'
+					name: locate.burnt
 				}
 			], colors    = [
 				'#66E1B6',
@@ -2012,7 +2013,7 @@
 							position: 'center',
 							formatter: [
 								'{a|6.66M} {x|DOT}',
-								'{t|Total amount}'
+								'{t| ' + locate.totalAmount + ' }'
 							].join( '\n' ),
 							rich: {
 								a: {
