@@ -2,7 +2,7 @@
 	function( $ ) {
 		'use strict';
 
-		var locate = window.SubWallet.Localization;
+		var locate = window.SubWallet_Landing.Localization;
 		var baseUrl = location.origin;
 		var partname = location.pathname.split( '/' );
 

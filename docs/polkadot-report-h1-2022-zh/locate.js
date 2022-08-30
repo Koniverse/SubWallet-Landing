@@ -19,5 +19,5 @@ var lang = {
 	others: 'Others'
 };
 
-window.SubWallet = window.SubWallet || {};
-window.SubWallet.Localization = lang;
+window.SubWallet_Landing = window.SubWallet_Landing || {};
+window.SubWallet_Landing.Localization = lang;
