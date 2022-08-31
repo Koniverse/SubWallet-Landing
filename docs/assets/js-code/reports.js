@@ -17,6 +17,7 @@
 		var $allCharts                 = $( '.block-chart' ),
 		    resizeTimer,
 		    dateFormatter              = '{dd}/{MM}/{yyyy}',
+		    dateShortFormatter         = '{MM}/{yyyy}',
 		    fontFamily                 = 'Space Grotesk',
 		    echarts                    = window.echarts,
 		    defaultTooltipStyle        = {
@@ -336,7 +337,7 @@
 				tooltip: defaultTooltipSettings,
 				legend: defaultLegendSettings,
 				grid: {
-					left: '3%',
+					left: '4px',
 					right: 95,
 					top: '3%',
 					containLabel: true
@@ -361,6 +362,7 @@
 					},
 					axisPointer: defaultAxisPointerSettings,
 					axisLabel: {
+						align: 'left',
 						formatter: dateFormatter,
 						color: '#7B8098'
 					}
@@ -527,7 +529,7 @@
 						trigger: 'axis'
 					},
 					xAxis: {
-						splitNumber: 4
+						splitNumber: 3
 					}
 				};
 
@@ -577,7 +579,7 @@
 				tooltip: defaultTooltipSettings,
 				legend: defaultLegendSettings,
 				grid: {
-					left: '3%',
+					left: '4px',
 					right: '3%',
 					top: '3%',
 					containLabel: true
@@ -602,6 +604,7 @@
 					},
 					axisPointer: defaultAxisPointerSettings,
 					axisLabel: {
+						align: 'left',
 						formatter: dateFormatter,
 						color: '#7B8098'
 					}
@@ -725,7 +728,7 @@
 			} else {
 				newOptions = {
 					xAxis: {
-						splitNumber: 4
+						splitNumber: 3
 					}
 				};
 
@@ -1712,7 +1715,7 @@
 					xAxis: {
 						splitNumber: 3,
 						axisLabel: {
-							formatter: '{MM}/{yyyy}'
+							formatter: dateShortFormatter
 						}
 					}
 				};
