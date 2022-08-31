@@ -16,6 +16,7 @@
 
 		var $allCharts                 = $( '.block-chart' ),
 		    resizeTimer,
+		    dateFormatter              = '{dd}/{MM}/{yyyy}',
 		    fontFamily                 = 'Space Grotesk',
 		    echarts                    = window.echarts,
 		    defaultTooltipStyle        = {
@@ -360,7 +361,7 @@
 					},
 					axisPointer: defaultAxisPointerSettings,
 					axisLabel: {
-						formatter: '{dd} {MMM} {yy}',
+						formatter: dateFormatter,
 						color: '#7B8098'
 					}
 				},
@@ -601,7 +602,7 @@
 					},
 					axisPointer: defaultAxisPointerSettings,
 					axisLabel: {
-						formatter: '{dd} {MMM} {yy}',
+						formatter: dateFormatter,
 						color: '#7B8098'
 					}
 				},
@@ -786,7 +787,7 @@
 					    },
 					    axisPointer: defaultAxisPointerSettings,
 					    axisLabel: {
-						    formatter: '{dd} {MMM} {yy}',
+						    formatter: dateFormatter,
 						    color: '#7B8098'
 					    }
 				    },
@@ -1157,7 +1158,7 @@
 					    },
 					    axisPointer: defaultAxisPointerSettings,
 					    axisLabel: {
-						    formatter: '{MMM} {yy}',
+						    formatter: dateFormatter,
 						    color: '#7B8098'
 					    }
 				    },
@@ -1625,7 +1626,7 @@
 						    }
 					    },
 					    axisLabel: {
-						    formatter: '{dd} {MMM} {yy}',
+						    formatter: dateFormatter,
 						    color: '#7B8098'
 					    }
 				    },
@@ -1688,7 +1689,7 @@
 					xAxis: {
 						splitNumber: 8,
 						axisLabel: {
-							formatter: '{dd} {MMM} {yy}'
+							formatter: dateFormatter
 						}
 					}
 				};
@@ -1709,9 +1710,9 @@
 						}
 					},
 					xAxis: {
-						splitNumber: 4,
+						splitNumber: 3,
 						axisLabel: {
-							formatter: '{MMM} {yy}'
+							formatter: '{MM}/{yyyy}'
 						}
 					}
 				};
@@ -2160,7 +2161,7 @@
 						}
 					},
 					axisLabel: {
-						formatter: '{dd} {MMM} {yy}',
+						formatter: dateFormatter,
 						color: '#7B8098'
 					}
 				},
