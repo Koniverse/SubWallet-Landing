@@ -151,10 +151,6 @@
 
 .row-roadmap {
 	align-items: flex-start;
-
-	+ .row-roadmap {
-		margin-top: 15px;
-	}
 }
 
 .roadmap-has-arrow {
@@ -220,17 +216,17 @@
 	}
 
 	.col-roadmap-q123 {
-		margin-top: 60px;
+		margin-top: 90px;
 		order: -98;
 	}
 
 	.col-roadmap-q223 {
-		margin-top: 120px;
+		margin-top: 180px;
 		order: -99;
 	}
 }
 
-@include media-breakpoint-between(lg, xl) {
+@media (min-width: 992px) and (max-width: 1200px) {
 	.roadmap-title {
 		font-size: 24px;
 	}
@@ -245,9 +241,13 @@
 	}
 
 	.col-roadmap-q322 {
-		.block-roadmap {
-			min-height: 400px;
-		}
+		margin-top: 400px;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.row-roadmap + .row-roadmap {
+		margin-top: 15px;
 	}
 }
 
@@ -287,7 +287,7 @@
 @include media-breakpoint-down(sm) {
 	.page-roadmap {
 		.section-roadmap {
-			padding: 0 0 30px;
+			padding: 0;
 		}
 	}
 
