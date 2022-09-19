@@ -266,10 +266,10 @@
 							chartOptions = getChartOptionsKusamaParachain( chartName, jsonData );
 							break;
 						case 'polkadot-dex':
-							chartOptions = getChartOptionsDotsamaDex( chartName, jsonData );
+							chartOptions = getChartOptionsPolkadotDex( chartName, jsonData );
 							break;
 						case 'polkadot-lending-protocol':
-							chartOptions = getChartOptionsDotsamaLendingProtocol( chartName, jsonData );
+							chartOptions = getChartOptionsPolkadotLendingProtocol( chartName, jsonData );
 							break;
 						case 'ausd-issuance':
 							chartOptions = getChartOptionsAUsdIssuance( chartName, jsonData );
@@ -1345,7 +1345,7 @@
 			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsDotsamaDex( chartName, jsonData ) {
+		function getChartOptionsPolkadotDex( chartName, jsonData ) {
 			var datasets = [
 				    {
 					    name: 'stellaswap',
@@ -1382,7 +1382,7 @@
 			return $.extend( true, baseOptions, responsiveOptions );
 		}
 
-		function getChartOptionsDotsamaLendingProtocol( chartName, jsonData ) {
+		function getChartOptionsPolkadotLendingProtocol( chartName, jsonData ) {
 			var datasets       = [
 				    {
 					    name: 'starlay',
@@ -2084,7 +2084,7 @@
 					type: 'line',
 					smooth: true,
 					showSymbol: false,
-					connectNulls: true, // used for dotsama dex.
+					connectNulls: true, // used for Polkadot dex.
 					emphasis: {
 						focus: 'series'
 					}
