@@ -1,0 +1,53 @@
+.section-logo {
+    padding: 50px 0 80px;
+    .button-image {
+        padding: 10px 0;
+    }
+
+    .button-group-wrap {
+        flex-wrap: wrap;
+    }
+
+    .button-group {
+        flex-wrap: nowrap;
+
+        &.button-group-logo,
+        &.button-group-app {
+            --gutter-x: 30px;
+            margin-top: 20px;
+        }
+
+        &.button-group-browser {
+            --gutter-x: 10px;
+            margin-top: 20px;
+        }
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .section-logo {
+        .button-group {
+            &.button-group-app {
+                padding-right: 48px;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .section-logo {
+        .button-group-wrap {
+            justify-content: right;
+            flex-wrap: nowrap;
+        }
+
+        .button-group {
+            flex-wrap: nowrap;
+
+            &.button-group-logo,
+            &.button-group-app {
+                --gutter-x: 48px;
+            }
+        }
+    }
+}

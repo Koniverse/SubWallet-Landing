@@ -1,0 +1,27 @@
+.section-features {
+    margin: 100px 0;
+    text-align: center;
+
+    .button {
+        margin-top: 40px;
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .section-features {
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .section-features {
+        margin: 120px 0;
+
+        .button {
+            margin-top: 60px;
+        }
+
+        .section-content {
+            //margin-right: -999px;
+        }
+    }
+}

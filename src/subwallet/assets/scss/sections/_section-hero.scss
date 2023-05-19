@@ -1,0 +1,42 @@
+.section-hero {
+	padding: 142px 0 0;
+	background: linear-gradient(180deg, #004BFF 0%, #4CEAAC 100%);
+    margin-bottom: 195px;
+    text-align: center;
+
+	.button-group {
+		--gutter-x: 10px;
+		margin-top: 40px;
+	}
+
+    .section-description {
+        font-size: 16px;
+        color: #fff;
+    }
+
+    .hero-image-wrap {
+        margin-bottom: -195px;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .section-hero {
+        margin-bottom: 120px;
+
+        .hero-image-wrap {
+            margin-bottom: -120px;
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .section-hero {
+        margin-bottom: 100px;
+
+        .hero-image-wrap {
+            margin-bottom: -100px;
+        }
+    }
+}

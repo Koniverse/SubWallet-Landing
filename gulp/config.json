@@ -8,27 +8,24 @@
     {
       "name": "frontend",
       "files": [
-        "docs/assets/js-code/helpers.js",
-        "docs/assets/js-code/frontend.js"
-      ]
-    },
-    {
-      "name": "reports",
-      "files": [
-        "docs/assets/js-code/reports.js"
-      ]
+        "src/subwallet/assets/js-code/helpers.js",
+        "src/subwallet/assets/js-code/frontend.js"
+      ],
+      "bothVersion": true
     },
     {
       "name": "swiper-wrapper",
       "files": [
-        "docs/assets/js-code/swiper-wrapper.js"
-      ]
+        "src/subwallet/assets/js-code/swiper-wrapper.js"
+      ],
+      "bothVersion": true
     },
     {
       "name": "grid-layout",
       "files": [
-        "docs/assets/js-code/grid-layout.js"
-      ]
+        "src/subwallet/assets/js-code/grid-layout.js"
+      ],
+      "bothVersion": true
     }
   ]
 }

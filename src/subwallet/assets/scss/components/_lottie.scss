@@ -1,0 +1,76 @@
+.position-relative {
+	position: relative;
+}
+
+.w-1x {
+	width: 100%;
+}
+
+.w-2x {
+	width: 200%;
+}
+
+.w-3x {
+	width: 300%;
+}
+
+.w-4x {
+	width: 400%;
+}
+
+.w-5x {
+	width: 500%;
+}
+
+.w-6x {
+	width: 600%;
+}
+
+.w-7x {
+	width: 700%;
+}
+
+.w-8x {
+	width: 800%;
+}
+
+.absolute-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.image-group {
+	display: inline-block;
+	position: relative;
+}
+
+.image-group .main-image {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+}
+
+.image-group .section-shape {
+	z-index: -1;
+}
+
+.lottie-player {
+	position: relative;
+	display: inline-block;
+	line-height: 1;
+}
+
+.lottie-player:before {
+	content: '';
+	display: inline-block;
+	width: 100%;
+	padding-top: 100%;
+}
+
+.lottie-player lottie-player {
+	position: absolute;
+	top: 0;
+	left: 0;
+}

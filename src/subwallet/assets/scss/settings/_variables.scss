@@ -1,0 +1,57 @@
+$primary-color: #004BFF;
+$secondary-color: #4CEAAC;
+
+$body-font-family: 'Plus Jakarta Sans', sans-serif;
+$body-font-size: 15px;
+$body-font-weight: 600;
+$body-font-weight-secondary: 500;
+$body-color: rgba(255, 255, 255, 0.65);
+$body-bg-color: #0C0C0C;
+$heading-font-family: 'Plus Jakarta Sans', sans-serif;
+$heading-font-weight: 700;
+$heading-font-weight-secondary: 600;
+$heading-color: #fff;
+$link-color: $secondary-color;
+$link-hover-color: $primary-color;
+
+$button-rounded: 32px;
+$button-font-family: $body-font-family;
+$button-font-size: 16px;
+$button-font-weight: 600;
+$button-letter-spacing: 0;
+$button-text-transform: capitalize;
+$button-text: #fff;
+$button-background: $primary-color;
+$button-border: $primary-color;
+$button-hover-text: #fff;
+$button-hover-background: $primary-color;
+$button-hover-border: $primary-color;
+
+$form-font-family: $body-font-family;
+$form-font-weight: $body-font-weight;
+$form-font-size: 15px;
+$form-line-height: 26px;
+$form-input-border-thickness: 1px;
+$form-input-padding: 18px;
+$form-input-height: 50px;
+$form-input-rounded: 5px;
+$form-textarea-rounded: 5px;
+$form-text: #000;
+$form-border: #d2d2d2;
+$form-background: #fff;
+$form-shadow: none;
+$form-focus-text: #000;
+$form-focus-border: #000;
+$form-focus-background: #fff;
+$form-focus-shadow: none;
+
+// Alert
+$success-color: #6cbd7e;
+$error-color: #d9534f;
+$warning-color: #ff9800;
+$info-color: #2196f3;
+
+$box-small-rounded: 0;
+
+$box-background: rgba(15, 21, 51, 0.7);
+$box-hover-background: rgba(2, 7, 34, 0.7);

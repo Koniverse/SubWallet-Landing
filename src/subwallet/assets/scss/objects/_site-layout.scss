@@ -1,0 +1,49 @@
+body {
+	overflow-x: hidden;
+}
+
+.container-fluid,
+.container-full-gap-100 {
+	@include make-container();
+}
+
+.container {
+	max-width: 100% !important;
+}
+
+@media screen and (min-width: 1200px) {
+	.container {
+		--bs-gutter-x: 15px;
+		max-width: 1270px !important;
+
+        &.container--gutter-50 {
+            [class*="col-"] {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+        }
+
+		&.container--gutter-70 {
+			[class*="col-"] {
+				padding-left: 35px;
+				padding-right: 35px;
+			}
+		}
+	}
+
+	.container-full-gap-100 {
+		--bs-gutter-x: 50px;
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.container-full-gap-100 {
+		--bs-gutter-x: 100px;
+	}
+}
+
+@media screen and (min-width: 1600px) {
+    .container {
+        max-width: 1470px !important;
+    }
+}

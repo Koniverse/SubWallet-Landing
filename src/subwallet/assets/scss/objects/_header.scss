@@ -1,0 +1,155 @@
+.header {
+    @extend %NormalTransition;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+
+    .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 0;
+    }
+}
+
+.header-pinned {
+    background: #1B1B1B;
+}
+
+.header.header-pinned .header-inner {
+    padding: 10px 0;
+}
+
+.site-branding img {
+    width: 191px;
+}
+
+.header-left,
+.header-right {
+    flex-shrink: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.header-center {
+    flex-grow: 1;
+}
+
+.primary-menu {
+    display: none;
+
+    ul {
+        margin: 0;
+    }
+
+    .nav-item {
+        margin: 0;
+
+        &.active-item,
+        &:hover {
+            > .nav-link {
+                color: #fff;
+
+                .nav-text:after {
+                    width: 100%;
+                    left: 0;
+                    right: auto;
+                }
+            }
+        }
+    }
+
+    .nav-link {
+        position: relative;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 28px;
+        padding: 10px 20px;
+        color: #fff;
+
+        .nav-text {
+            position: relative;
+            display: block;
+
+            &:after {
+                content: '';
+                width: 0;
+                height: 1px;
+                position: absolute;
+                left: auto;
+                right: 0;
+                bottom: 0;
+                transition: width .6s cubic-bezier(.25, .8, .25, 1) 0s;
+                background: #fff;
+            }
+        }
+    }
+}
+
+.primary-menu {
+    display: none;
+}
+
+.navbar-toggler {
+    min-height: 0;
+}
+
+.header-button {
+    --sw-button-text: #{$button-text};
+    --sw-button-border-color: #1B1B1B;
+    --sw-button-background: #1B1B1B;
+
+    &:focus,
+    &:hover {
+        border-color: #1B1B1B;
+        background-color: #1B1B1B;
+        box-shadow: 0 0 0 0.2rem #1B1B1B;
+    }
+
+    .header-pinned & {
+        --sw-button-text: #fff;
+        --sw-button-border-color: #004BFF;
+        --sw-button-background: #004BFF;
+
+        &:focus,
+        &:hover {
+            border-color: #004BFF;
+            background-color: #004BFF;
+            box-shadow: 0 0 0 0.2rem #004BFF;
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .site-branding {
+        img {
+            width: 150px;
+        }
+    }
+}
+
+@include media-breakpoint-down(xs) {
+    .header-right .header-button {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1100px) {
+    .primary-menu {
+        display: block;
+
+        .nav {
+            justify-content: center;
+        }
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+}

@@ -1,0 +1,11 @@
+.page-home {
+	.main-content {
+		padding: 0;
+	}
+
+    .swiper-slide {
+        &:hover {
+            cursor: grab;
+        }
+    }
+}
