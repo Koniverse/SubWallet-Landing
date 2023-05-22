@@ -1,0 +1,53 @@
+.section-multichain {
+    position: relative;
+    padding: 100px 30px;
+    background: #1A1A1A url(../images/homepage/multichain-img.png) no-repeat center center;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .2);
+    }
+
+    &-content {
+        max-width: 568px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .section-shape {
+        z-index: 1;
+    }
+
+    .section-header {
+        text-align: left;
+    }
+
+    .section-description {
+        margin: 40px 0;
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .section-multichain {
+        background-position: right center;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .section-multichain {
+        padding: 175px 122px;
+
+        &:before {
+            background-color: rgba(0, 0, 0, 0);
+        }
+    }
+}

@@ -6,5 +6,5 @@ var gulp   = require( 'gulp' ),
 
 gulp.task( 'watch:main', function() {
 	gulp.watch( paths.sass.watch, gulp.series( 'sass' ) );
-	gulp.watch( paths.javascript.src, gulp.series( 'javascript:dev' ) );
+	gulp.watch( paths.javascript.src, gulp.series( 'javascript' ) );
 } );

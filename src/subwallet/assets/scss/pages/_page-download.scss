@@ -1,0 +1,26 @@
+.page-download {
+    .section-give-it-a-try {
+        padding: 160px 0 20px;
+    }
+
+    .header-button {
+        --sw-button-text: #fff;
+        --sw-button-border-color: #004BFF;
+        --sw-button-background: #004BFF;
+
+        &:focus,
+        &:hover {
+            border-color: #004BFF;
+            background-color: #004BFF;
+            box-shadow: 0 0 0 0.2rem #004BFF;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .page-download {
+        .section-give-it-a-try {
+            padding: 206px 0 70px;
+        }
+    }
+}

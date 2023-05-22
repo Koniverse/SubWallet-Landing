@@ -1,0 +1,110 @@
+.section-give-it-a-try {
+    padding: 90px 0 20px;
+    background: url("../images/homepage/give-it-bg.png") no-repeat center center;
+    background-size: cover;
+
+    .section-header {
+        text-align: left;
+        margin-bottom: 60px;
+    }
+
+    .section-description {
+        max-width: 710px;
+        color: #fff;
+    }
+}
+
+.give-it-item {
+    margin: 0 -15px 60px;
+
+    &--info {
+        margin-bottom: 20px;
+    }
+
+    &--info,
+    &--list {
+        padding: 0 15px;
+    }
+
+    &--heading {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    &--text {
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, .65);
+    }
+
+    &--list {
+        list-style: none;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+
+        li {
+            margin: 0 0 10px 0;
+            padding: 0 10px;
+        }
+
+        a {
+            font-size: 18px;
+            width: 200px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, .08);
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, .18);
+            }
+        }
+
+        img {
+            margin-right: 10px;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .section-give-it-a-try {
+        padding: 150px 0 100px;
+
+        .section-header {
+            margin-bottom: 74px;
+        }
+
+        .page-home & {
+            padding: 300px 0 100px;
+            margin-top: -148px;
+        }
+    }
+
+    .give-it-item {
+        display: flex;
+
+        &--info {
+            max-width: 375px;
+            flex-shrink: 0;
+        }
+
+        &--list {
+            flex-grow: 1;
+
+            a {
+                font-size: 20px;
+                width: 224px;
+                height: 76px;
+            }
+        }
+    }
+}

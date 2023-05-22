@@ -14,6 +14,7 @@
 		"browser-sync-reuse-tab": "latest",
 		"bs-snippet-injector": "^2.0.1",
 		"css-mqpacker": "^5.0.1",
+		"dateformat": "^1.0.12",
 		"del": "^2.2.0",
 		"eslint": "latest",
 		"fancy-log": "^1.3.3",
@@ -28,19 +29,21 @@
 		"gulp-postcss": "^6.1.1",
 		"gulp-rename": "^1.2.2",
 		"gulp-sass": "^4.1.0",
+		"gulp-size": "latest",
 		"gulp-sort": "^2.0.0",
 		"gulp-sourcemaps": "^1.6.0",
 		"gulp-strip-css-comments": "^2.0.0",
+		"gulp-todo": "latest",
 		"gulp-uglify": "latest",
+		"gulp-zip": "^3.2.0",
 		"lodash": "^4.14.1",
 		"postcss-assets": "^4.1.0",
 		"postcss-pxtorem": "^3.3.1",
 		"stylelint": "latest"
 	},
 	"scripts": {
-		"push:test": "rsync -avz -e 'ssh -p 2222' /Volumes/DATA/repos/subwallet/docs/* www-data@178.128.57.30:/opt/easyengine/sites/project.thememove.com/app/htdocs/subwallet --delete",
-		"push:test2": "rsync -avz -e 'ssh -p 2222' /Volumes/DATA/repos/subwallet/docs/* www-data@178.128.57.30:/opt/easyengine/sites/project.thememove.com/app/htdocs",
-		"build": "gulp javascript:production && gulp sass:full"
+		"push:themes": "rsync -avz -e 'ssh -p 2222' /Volumes/DATA/repos/html-subwallet/src/subwallet/* www-data@178.128.57.30:/opt/easyengine/sites/project.thememove.com/app/htdocs/subwallet --delete",
+		"package": "find . -name '.DS_Store' -type f -delete && gulp javascript && gulp sass:full && gulp zip"
 	},
 	"dependencies": {
 		"css-size": "^4.0.1",
